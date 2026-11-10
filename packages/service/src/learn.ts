@@ -1,7 +1,7 @@
 import { domainOf, isFreeMailDomain, normalizeDescription, normalizePartNumber, type OrderDraft } from "@desk/core";
 import { customers, inboundMessages, PgCatalogIndex, type Tx } from "@desk/db";
 import { and, eq, sql } from "drizzle-orm";
-import { logEvent, type Actor } from "./audit.js";
+import { logEvent, type Actor } from "./audit";
 
 /**
  * The moat (plan §4.5 #1): every confirmed order teaches the desk.

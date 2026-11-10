@@ -1,7 +1,7 @@
 import type { CatalogItem, CustomerRecord } from "@desk/core";
 import { createPgliteDb, DEMO_CUSTOMERS, DEMO_ITEMS, type Db, type PgliteContext } from "@desk/db";
 import { FakeLlm, fixtures, type LlmClient } from "@desk/extract";
-import { applySync, connectSimple, ensureTenant, makeConnectorFactory, MemoryBlobStore, MemoryMailer, SYSTEM, updateSettings, type ServiceDeps } from "../src/index.js";
+import { applySync, connectSimple, ensureTenant, makeConnectorFactory, MemoryBlobStore, MemoryMailer, SYSTEM, updateSettings, type ServiceDeps } from "../src/index";
 
 export const { extractedLine, extractedOrder, extraction } = fixtures;
 

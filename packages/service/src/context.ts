@@ -1,8 +1,8 @@
 import type { Db, integrations } from "@desk/db";
 import type { ErpConnector } from "@desk/erp";
 import type { LlmClient } from "@desk/extract";
-import type { BlobStore } from "./blobs.js";
-import type { Mailer } from "./mailer.js";
+import type { BlobStore } from "./blobs";
+import type { Mailer } from "./mailer";
 
 export type IntegrationRow = typeof integrations.$inferSelect;
 

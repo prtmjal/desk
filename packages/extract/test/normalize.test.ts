@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import ExcelJS from "exceljs";
-import { normalizeInput, stripQuotedReplies, htmlToText, documentToContentBlocks } from "../src/index.js";
+import { normalizeInput, stripQuotedReplies, htmlToText, documentToContentBlocks } from "../src/index";
 
 const bytes = (s: string) => new Uint8Array(Buffer.from(s, "utf8"));
 

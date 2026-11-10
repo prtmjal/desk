@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { InMemoryCatalog, DEFAULT_AUTOPOST } from "@desk/core";
-import { FakeLlm, processDocument, fixtures, loadPrompt, renderPrompt, type NormalizedDocument } from "../src/index.js";
+import { FakeLlm, processDocument, fixtures, loadPrompt, renderPrompt, type NormalizedDocument } from "../src/index";
 
 const { DEMO_ITEMS, DEMO_CUSTOMERS, extractedLine, extractedOrder, extraction, validationFromCatalog } = fixtures;
 

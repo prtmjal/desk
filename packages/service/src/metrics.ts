@@ -1,8 +1,8 @@
 import type { OrderDraft, ValidationIssue } from "@desk/core";
 import { customers, orderLines, orders, tenantSettings, withTenant } from "@desk/db";
 import { and, eq, gte, inArray, sql } from "drizzle-orm";
-import { nowOf, type ServiceDeps } from "./context.js";
-import { effectiveSettings } from "./tenants.js";
+import { nowOf, type ServiceDeps } from "./context";
+import { effectiveSettings } from "./tenants";
 
 export const ISSUE_LABELS: Record<ValidationIssue["code"], string> = {
   ITEM_UNMATCHED: "Item not found",

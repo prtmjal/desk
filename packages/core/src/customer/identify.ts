@@ -1,6 +1,6 @@
-import type { CustomerMatch, ExtractedOrder } from "../schema/index.js";
-import { normalizePartNumber } from "../matching/normalize.js";
-import { similarity } from "../matching/trigram.js";
+import type { CustomerMatch, ExtractedOrder } from "../schema/index";
+import { normalizePartNumber } from "../matching/normalize";
+import { similarity } from "../matching/trigram";
 
 export type CustomerRecord = {
   id: string;

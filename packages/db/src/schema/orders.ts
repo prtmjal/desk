@@ -15,12 +15,12 @@ import {
   uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
-import { id, timestamps } from "./common.js";
-import { customers, shipTos } from "./customers.js";
-import { documents, inboundMessages } from "./inbound.js";
-import { items } from "./items.js";
-import { tenantId } from "./tenants.js";
-import { users } from "./users.js";
+import { id, timestamps } from "./common";
+import { customers, shipTos } from "./customers";
+import { documents, inboundMessages } from "./inbound";
+import { items } from "./items";
+import { tenantId } from "./tenants";
+import { users } from "./users";
 
 export const orderStatus = pgEnum("order_status", ["new", "needs_review", "confirmed", "posted", "rejected"]);
 

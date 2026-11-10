@@ -1,6 +1,6 @@
-import type { DraftLine, OrderHeader, ValidationIssue, CustomerMatch } from "../schema/index.js";
-import type { CatalogItem } from "../matching/catalog.js";
-import { applyPackRules, resolveUom } from "../matching/uom.js";
+import type { DraftLine, OrderHeader, ValidationIssue, CustomerMatch } from "../schema/index";
+import type { CatalogItem } from "../matching/catalog";
+import { applyPackRules, resolveUom } from "../matching/uom";
 
 /**
  * ERP-side facts the validator needs. Provided by the connector (or fixtures);

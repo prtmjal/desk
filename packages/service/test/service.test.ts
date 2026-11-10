@@ -21,8 +21,8 @@ import {
   SYSTEM,
   updateSettings,
   type Actor,
-} from "../src/index.js";
-import { createWorld, email, extractedLine, extractedOrder, extraction, live, type World } from "./harness.js";
+} from "../src/index";
+import { createWorld, email, extractedLine, extractedOrder, extraction, live, type World } from "./harness";
 
 const USER: Actor = { kind: "system" };
 let w: World;
@@ -264,7 +264,7 @@ describe("review and posting", () => {
     w = await createWorld({ llm: new FakeLlm({ extraction: cleanOrder("PO-700") }) });
     await ingest(w.deps, w.tenantId, email());
     const [o] = await listOrders(w.deps, w.tenantId);
-    const { ensureTenant } = await import("../src/index.js");
+    const { ensureTenant } = await import("../src/index");
     const other = await ensureTenant(w.deps.db, { kind: "auth_org", key: "org_other", name: "Other Co" });
     expect(await listOrders(w.deps, other.tenantId)).toHaveLength(0);
     expect(await getOrder(w.deps, other.tenantId, o!.id)).toBeNull();

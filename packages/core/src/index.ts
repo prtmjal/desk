@@ -8,7 +8,7 @@
  *
  * No I/O, no model calls, no database access in this package.
  */
-export * from "./schema/index.js";
-export * from "./matching/index.js";
-export * from "./customer/index.js";
-export * from "./rules/index.js";
+export * from "./schema/index";
+export * from "./matching/index";
+export * from "./customer/index";
+export * from "./rules/index";

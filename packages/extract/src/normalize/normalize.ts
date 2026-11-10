@@ -3,7 +3,7 @@ import ExcelJS from "exceljs";
 import Papa from "papaparse";
 import mammoth from "mammoth";
 import { extractText, getDocumentProxy } from "unpdf";
-import type { DocPart, NormalizedDocument, RawAttachment, RawInput } from "./types.js";
+import type { DocPart, NormalizedDocument, RawAttachment, RawInput } from "./types";
 
 const IMAGE_TYPES: Record<string, "image/png" | "image/jpeg" | "image/gif" | "image/webp"> = {
   png: "image/png",

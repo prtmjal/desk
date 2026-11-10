@@ -117,3 +117,87 @@
     @apply text-xs font-semibold tracking-wide text-accent uppercase;
   }
 }
+
+/* ---- Application (Phase 2) ---------------------------------------------------------- */
+:root {
+  --warn: #b45309;
+  --warn-soft: #fef3c7;
+  --danger-soft: #fee2e2;
+  --ok-soft: #dcfce7;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --warn: #fbbf24;
+    --warn-soft: #422006;
+    --danger-soft: #450a0a;
+    --ok-soft: #052e16;
+  }
+}
+
+@theme inline {
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger-soft: var(--danger-soft);
+  --color-ok-soft: var(--ok-soft);
+}
+
+@layer components {
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60;
+    @apply border border-border bg-card text-danger hover:bg-danger-soft;
+  }
+
+  .btn-sm {
+    @apply !px-2.5 !py-1.5 !text-xs;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full border border-border px-2 py-0.5 text-xs font-medium whitespace-nowrap text-muted;
+  }
+
+  .badge-ok {
+    @apply border-transparent bg-ok-soft text-ok;
+  }
+
+  .badge-warn {
+    @apply border-transparent bg-warn-soft text-warn;
+  }
+
+  .badge-danger {
+    @apply border-transparent bg-danger-soft text-danger;
+  }
+
+  .badge-accent {
+    @apply border-transparent bg-accent-soft text-accent-strong;
+  }
+
+  .table {
+    @apply w-full border-collapse text-left text-sm;
+  }
+
+  .table th {
+    @apply border-b border-border px-3 py-2 text-xs font-medium tracking-wide text-muted uppercase;
+  }
+
+  .table td {
+    @apply border-b border-border px-3 py-2.5 align-top;
+  }
+
+  .table tbody tr:last-child td {
+    @apply border-b-0;
+  }
+
+  .table-tight th,
+  .table-tight td {
+    @apply px-2;
+  }
+
+  .kbd {
+    @apply rounded border border-border bg-bg-subtle px-1.5 py-0.5 font-mono text-[11px] text-muted;
+  }
+
+  .field-sm {
+    @apply rounded-md border border-border bg-card px-2 py-1 text-sm text-fg placeholder:text-muted;
+  }
+}

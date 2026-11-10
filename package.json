@@ -2,7 +2,7 @@
   "name": "desk",
   "private": true,
   "version": "0.0.1",
-  "description": "DESK — AI order desk for SMB distributors and light manufacturers",
+  "description": "DESK \u2014 AI order desk for SMB distributors and light manufacturers",
   "packageManager": "pnpm@10.0.0",
   "engines": {
     "node": ">=22"
@@ -17,7 +17,8 @@
     "replay": "pnpm --filter @desk/scripts run replay",
     "db:generate": "pnpm --filter @desk/db run generate",
     "db:migrate": "pnpm --filter @desk/db run migrate",
-    "format": "prettier --write \"**/*.{ts,tsx,md,json}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "demo": "DESK_DEMO=1 pnpm --filter @desk/web dev"
   },
   "devDependencies": {
     "@types/node": "^22.15.0",

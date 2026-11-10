@@ -11,8 +11,8 @@ import { PGlite } from "@electric-sql/pglite";
 import { pg_trgm } from "@electric-sql/pglite/contrib/pg_trgm";
 import { drizzle, type PgliteDatabase } from "drizzle-orm/pglite";
 import { migrate } from "drizzle-orm/pglite/migrator";
-import { MIGRATIONS_FOLDER } from "./migrate.js";
-import * as schema from "./schema/index.js";
+import { MIGRATIONS_FOLDER } from "./migrate";
+import * as schema from "./schema/index";
 
 export type PgliteDb = PgliteDatabase<typeof schema>;
 
@@ -39,12 +39,15 @@ async function installVectorShim(client: PGlite): Promise<boolean> {
 
 export type PgliteContext = { db: PgliteDb; client: PGlite; hasPgvector: boolean; close(): Promise<void> };
 
-/** `dataDir` undefined = in-memory; a path persists across restarts (demo mode). */
-export async function createPgliteDb(dataDir?: string): Promise<PgliteContext> {
+/**
+ * `dataDir` undefined = in-memory; a path persists across restarts (demo mode).
+ * `migrationsFolder` is only needed when this package is bundled and its own path is lost.
+ */
+export async function createPgliteDb(dataDir?: string, migrationsFolder: string = MIGRATIONS_FOLDER): Promise<PgliteContext> {
   const client = new PGlite({ dataDir, extensions: { pg_trgm } });
   await client.waitReady;
   const hasPgvector = await installVectorShim(client);
   const db = drizzle({ client, schema });
-  await migrate(db, { migrationsFolder: MIGRATIONS_FOLDER });
+  await migrate(db, { migrationsFolder });
   return { db, client, hasPgvector, close: () => client.close() };
 }

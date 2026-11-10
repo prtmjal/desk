@@ -2,10 +2,10 @@ import type Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { z } from "zod";
 import { ExtractionOutput, DocumentType, type CostRecord, type CatalogItem, type ExtractedLine } from "@desk/core";
-import { getAnthropic, modelConfigFromEnv, usageToCost, type ModelConfig } from "./client.js";
-import { loadPrompt } from "./prompts/index.js";
-import type { NormalizedDocument } from "./normalize/types.js";
-import { documentToContentBlocks } from "./normalize/to-content.js";
+import { getAnthropic, modelConfigFromEnv, usageToCost, type ModelConfig } from "./client";
+import { loadPrompt } from "./prompts/index";
+import type { NormalizedDocument } from "./normalize/types";
+import { documentToContentBlocks } from "./normalize/to-content";
 
 export const ClassificationOutput = z.object({
   documentType: DocumentType,

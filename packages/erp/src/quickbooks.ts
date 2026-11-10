@@ -18,7 +18,7 @@
  */
 import type { CatalogItem, CustomerRecord, OrderDraft } from "@desk/core";
 import { domainOf, isFreeMailDomain } from "@desk/core";
-import { ConnectorAuthError, ConnectorValidationError, type CreateSalesOrderResult, type ErpConnector, type PriceListEntry, type StockLevel, type SyncResult } from "./connector.js";
+import { ConnectorAuthError, ConnectorValidationError, type CreateSalesOrderResult, type ErpConnector, type PriceListEntry, type StockLevel, type SyncResult } from "./connector";
 
 export type QboEnvironment = "sandbox" | "production";
 export type QboOrderEntity = "estimate" | "sales_order";

@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { memberships, tenantRoutes, tenantSettings, tenants, users, withTenant, type Db, type TenantSettings } from "@desk/db";
 import { and, eq } from "drizzle-orm";
-import { logEvent, SYSTEM, type Actor } from "./audit.js";
-import { ServiceError, type ServiceDeps } from "./context.js";
+import { logEvent, SYSTEM, type Actor } from "./audit";
+import { ServiceError, type ServiceDeps } from "./context";
 
 export type RouteKind = "auth_org" | "inbound_slug" | "stripe_customer" | "qbo_realm";
 
@@ -30,8 +30,8 @@ export function slugify(name: string): string {
     .toLowerCase()
     .normalize("NFKD")
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 32);
+    .slice(0, 32)
+    .replace(/^-+|-+$/g, "");
   return s || "tenant";
 }
 
@@ -63,7 +63,7 @@ export async function ensureTenant(
   if (existing) return { tenantId: existing, created: false };
 
   const tenantId = input.id ?? randomUUID();
-  const slug = `${slugify(input.name)}-${tenantId.slice(0, 6)}`;
+  const slug = `${slugify(input.name)}-${tenantId.replace(/-/g, "").slice(-6)}`;
   try {
     await withTenant(db, tenantId, async (tx) => {
       await tx.insert(tenants).values({ id: tenantId, name: input.name, slug, plan: "trial" }).onConflictDoNothing();

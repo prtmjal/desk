@@ -25,9 +25,9 @@ import {
   type ValidationContext,
   type ValidationPolicy,
 } from "@desk/core";
-import type { ClassificationOutput, LlmClient } from "./llm.js";
-import { documentContextText } from "./normalize/to-content.js";
-import type { NormalizedDocument } from "./normalize/types.js";
+import type { ClassificationOutput, LlmClient } from "./llm";
+import { documentContextText } from "./normalize/to-content";
+import type { NormalizedDocument } from "./normalize/types";
 
 export const EXTRACTOR_VERSION = "0.1.0";
 

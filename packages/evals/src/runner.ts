@@ -3,8 +3,8 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { InMemoryCatalog, type CatalogItem, type CustomerRecord } from "@desk/core";
 import { AnthropicLlm, FakeLlm, fixtures, normalizeInput, processDocument, type LlmClient, type NormalizedDocument } from "@desk/extract";
-import { GoldenCase } from "./golden.js";
-import { aggregate, scoreCase, type Aggregate, type CaseScore } from "./scorer.js";
+import { GoldenCase } from "./golden";
+import { aggregate, scoreCase, type Aggregate, type CaseScore } from "./scorer";
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const GOLDEN_ROOT = resolve(here, "..", "golden");

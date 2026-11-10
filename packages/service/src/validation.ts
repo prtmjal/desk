@@ -9,8 +9,8 @@ import {
 } from "@desk/core";
 import { customers, items, orders, priceListItems, rules, toCatalogItem, type TenantSettings } from "@desk/db";
 import { and, eq, inArray, lt, ne, or, sql } from "drizzle-orm";
-import type { Run } from "./scope.js";
-import { effectiveSettings } from "./tenants.js";
+import type { Run } from "./scope";
+import { effectiveSettings } from "./tenants";
 
 /** ERP facts for the validator, read from the mirrored tables (plan §6.2 "validation against ERP"). */
 export class PgValidationContext implements ValidationContext {

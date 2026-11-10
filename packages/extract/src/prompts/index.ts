@@ -11,7 +11,11 @@ export type PromptName = "extract-order" | "classify" | "rerank";
 
 export type LoadedPrompt = { name: PromptName; version: string; body: string };
 
-const here = dirname(fileURLToPath(import.meta.url));
+/**
+ * Prompt files sit next to this module. When the package is bundled (Next.js), the module
+ * path no longer points at the source tree, so the host sets DESK_PROMPTS_DIR instead.
+ */
+const promptsDir = () => process.env.DESK_PROMPTS_DIR || dirname(fileURLToPath(import.meta.url));
 
 const PINNED: Record<PromptName, number> = {
   "extract-order": 1,
@@ -25,7 +29,7 @@ export function loadPrompt(name: PromptName, version: number = PINNED[name]): Lo
   const key = `${name}.v${version}`;
   const hit = cache.get(key);
   if (hit) return hit;
-  const raw = readFileSync(join(here, `${key}.md`), "utf8");
+  const raw = readFileSync(join(promptsDir(), `${key}.md`), "utf8");
   const parsed = parseFrontMatter(raw);
   const loaded: LoadedPrompt = { name, version: parsed.meta.version ?? `v${version}`, body: parsed.body.trim() };
   cache.set(key, loaded);

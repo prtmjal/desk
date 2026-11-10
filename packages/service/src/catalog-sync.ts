@@ -3,8 +3,8 @@ import { customers, integrations, items, priceListItems, priceLists, syncRuns, w
 import { ConnectorAuthError, parseCustomersCsv, parseItemsCsv, type ErpConnector, type PriceListEntry } from "@desk/erp";
 import { parseCsvRows } from "@desk/extract";
 import { and, eq, inArray, sql } from "drizzle-orm";
-import { logEvent, type Actor } from "./audit.js";
-import { errorText, nowOf, ServiceError, type ServiceDeps } from "./context.js";
+import { logEvent, type Actor } from "./audit";
+import { errorText, nowOf, ServiceError, type ServiceDeps } from "./context";
 
 const BATCH = 400;
 const chunks = <T>(arr: T[], n = BATCH): T[][] => Array.from({ length: Math.ceil(arr.length / n) }, (_, i) => arr.slice(i * n, i * n + n));

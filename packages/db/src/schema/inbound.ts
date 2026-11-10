@@ -1,6 +1,6 @@
 import { index, integer, pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
-import { id, timestamps } from "./common.js";
-import { tenantId } from "./tenants.js";
+import { id, timestamps } from "./common";
+import { tenantId } from "./tenants";
 
 /**
  * One row per inbound email (or upload session). (tenant_id, message_id) is the

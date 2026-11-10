@@ -1,6 +1,6 @@
 import type { CatalogItem, ExtractedLine, ExtractionOutput } from "@desk/core";
-import type { ClassificationOutput, LlmClient, LlmResult, RerankOutput } from "../llm.js";
-import type { NormalizedDocument } from "../normalize/types.js";
+import type { ClassificationOutput, LlmClient, LlmResult, RerankOutput } from "../llm";
+import type { NormalizedDocument } from "../normalize/types";
 
 type Fn<T> = (doc: NormalizedDocument) => T;
 

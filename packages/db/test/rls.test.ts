@@ -1,9 +1,9 @@
 import { sql } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { withTenant } from "../src/client.js";
-import { withItemKeys } from "../src/catalog.js";
-import { customers, documents, inboundMessages, items, orders, tenants } from "../src/schema/index.js";
-import { createTestDb, type TestContext } from "./pglite.js";
+import { withTenant } from "../src/client";
+import { withItemKeys } from "../src/catalog";
+import { customers, documents, inboundMessages, items, orders, tenants } from "../src/schema/index";
+import { createTestDb, type TestContext } from "./pglite";
 
 const TENANT_A = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
 const TENANT_B = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";

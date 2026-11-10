@@ -9,7 +9,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { fixtures } from "@desk/extract";
-import type { GoldenCase } from "../src/golden.js";
+import type { GoldenCase } from "../src/golden";
 
 const { DEMO_ITEMS, DEMO_CUSTOMERS, extractedLine, extractedOrder, extraction } = fixtures;
 const out = resolve(dirname(fileURLToPath(import.meta.url)), "..", "golden", "demo");

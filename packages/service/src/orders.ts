@@ -21,14 +21,16 @@ import {
 import { customers, documents, events, inboundMessages, integrations, items, orderLines, orders, rules, tenantSettings, toCatalogItem, usageMeters, withTenant, type Tx } from "@desk/db";
 import { ConnectorAuthError, ConnectorValidationError } from "@desk/erp";
 import { and, desc, eq, ilike, inArray, or, sql } from "drizzle-orm";
-import { logEvent, SYSTEM, type Actor } from "./audit.js";
-import { itemErpIds } from "./catalog-sync.js";
-import { errorText, nowOf, ServiceError, type ServiceDeps } from "./context.js";
-import { learnFromOrder } from "./learn.js";
-import { sendAcknowledgment } from "./notify.js";
-import { ScopedCatalog, scopeIn, type Run } from "./scope.js";
-import { effectiveSettings } from "./tenants.js";
-import { autoPostPolicyFor, PgValidationContext, validationPolicyFrom } from "./validation.js";
+import { logEvent, SYSTEM, type Actor } from "./audit";
+import { itemErpIds } from "./catalog-sync";
+import { errorText, nowOf, ServiceError, type ServiceDeps } from "./context";
+import { learnFromOrder } from "./learn";
+import { sendAcknowledgment } from "./notify";
+import { ScopedCatalog, scopeIn, type Run } from "./scope";
+import { effectiveSettings } from "./tenants";
+import { autoPostPolicyFor, PgValidationContext, validationPolicyFrom } from "./validation";
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export type OrderRow = typeof orders.$inferSelect;
 export type OrderStatus = OrderRow["status"];
@@ -382,7 +384,7 @@ export async function confirmOrder(deps: ServiceDeps, tenantId: string, orderId:
         const confirmedDraft: OrderDraft = { ...fresh, status: "confirmed" };
         await tx
           .update(orders)
-          .set({ ...columnsFromDraft(confirmedDraft), status: "confirmed", reviewedBy: actor.kind === "user" ? actor.id : null, reviewedAt: at, autoPosted: auto, postError: null })
+          .set({ ...columnsFromDraft(confirmedDraft), status: "confirmed", reviewedBy: actor.kind === "user" && UUID_RE.test(actor.id) ? actor.id : null, reviewedAt: at, autoPosted: auto, postError: null })
           .where(eq(orders.id, orderId));
         await logEvent(tx, { tenantId, actor, action: auto ? "auto_confirmed" : "confirmed", entity: "order", entityId: orderId, before: { status: row.status }, after: { status: "confirmed" }, at });
         return { row: { ...row, draft: confirmedDraft, status: "confirmed" as const, autoPosted: auto }, already: false as const };
@@ -446,7 +448,7 @@ export async function confirmOrder(deps: ServiceDeps, tenantId: string, orderId:
         .set({ status: "posted", draft: { ...cur.draft, status: "posted" }, erpOrderId: posted.erpOrderId, erpOrderNumber: posted.erpOrderNumber, erpUrl: posted.url, postedAt: at, touchless, postError: null })
         .where(eq(orders.id, orderId));
       await bumpUsage(tx, tenantId, at, { posted: 1, touchless: touchless ? 1 : 0 });
-      await logEvent(tx, { tenantId, actor: { kind: "integration", id: integration.id }, action: "posted", entity: "order", entityId: orderId, after: { erpOrderId: posted.erpOrderId, erpOrderNumber: posted.erpOrderNumber, erpStatus: posted.status, documentAttached: attached, touchless }, at });
+      await logEvent(tx, { tenantId, actor: { kind: "integration", id: integration.id }, action: "posted", entity: "order", entityId: orderId, after: { erpOrderId: posted.erpOrderId, erpOrderNumber: posted.erpOrderNumber, erpStatus: posted.status, documentAttached: attached, touchless } });
       return true;
     });
     if (firstPost && deps.usage) {
@@ -545,7 +547,8 @@ export async function listOrders(deps: Pick<ServiceDeps, "db">, tenantId: string
         id: o.id,
         status: o.status,
         poNumber: o.poNumber,
-        total: o.total,
+        // The printed total when the document has one, otherwise what the lines add up to.
+        total: o.total ?? (d && d.lines.some((l) => l.unitPrice.value !== null) ? d.lines.reduce((sum, l) => sum + (l.quantity.value ?? 0) * (l.unitPrice.value ?? 0), 0).toFixed(2) : null),
         confidence: o.confidence,
         createdAt: o.createdAt,
         postedAt: o.postedAt,

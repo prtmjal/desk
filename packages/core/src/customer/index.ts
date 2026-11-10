@@ -1,1 +1,1 @@
-export * from "./identify.js";
+export * from "./identify";

@@ -1,6 +1,6 @@
-import type { PackDefinition } from "./uom.js";
-import { normalizePartNumber, normalizeDescription, normalizeDimensions } from "./normalize.js";
-import { similarity, coverage } from "./trigram.js";
+import type { PackDefinition } from "./uom";
+import { normalizePartNumber, normalizeDescription, normalizeDimensions } from "./normalize";
+import { similarity, coverage } from "./trigram";
 
 /** Item master row as the matcher sees it (ERP-agnostic). */
 export type CatalogItem = {

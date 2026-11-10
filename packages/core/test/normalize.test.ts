@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { normalizePartNumber, partNumberVariants, tokenize, normalizeDimensions, normalizeDescription } from "../src/index.js";
-import { similarity, coverage } from "../src/index.js";
-import { normalizeUom, resolveUom, applyPackRules } from "../src/index.js";
+import { normalizePartNumber, partNumberVariants, tokenize, normalizeDimensions, normalizeDescription } from "../src/index";
+import { similarity, coverage } from "../src/index";
+import { normalizeUom, resolveUom, applyPackRules } from "../src/index";
 
 describe("normalizePartNumber", () => {
   it("collapses punctuation and case", () => {

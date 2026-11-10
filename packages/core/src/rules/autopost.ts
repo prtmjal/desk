@@ -1,4 +1,4 @@
-import type { DraftLine, MatchMethod, ValidationIssue } from "../schema/index.js";
+import type { DraftLine, MatchMethod, ValidationIssue } from "../schema/index";
 
 /**
  * Per-tenant / per-customer auto-post thresholds (plan §6.2 rules engine).

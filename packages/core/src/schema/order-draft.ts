@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { Confidence } from "./common.js";
-import { DocumentType, ExtractedLine, ExtractedOrder } from "./extracted-order.js";
+import { Confidence } from "./common";
+import { DocumentType, ExtractedLine, ExtractedOrder } from "./extracted-order";
 
 export const MatchMethod = z.enum([
   "L0_exact",

@@ -1,6 +1,6 @@
 import { index, integer, jsonb, pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
-import { id, timestamps } from "./common.js";
-import { tenantId } from "./tenants.js";
+import { id, timestamps } from "./common";
+import { tenantId } from "./tenants";
 
 /** ERP / email / storage connections. Secrets live in a vault; we store only a reference. */
 export const integrations = pgTable(

@@ -1,7 +1,7 @@
 import type { PackDefinition } from "@desk/core";
 import { boolean, index, jsonb, numeric, pgTable, text, timestamp, unique } from "drizzle-orm/pg-core";
-import { id, timestamps, vector } from "./common.js";
-import { tenantId } from "./tenants.js";
+import { id, timestamps, vector } from "./common";
+import { tenantId } from "./tenants";
 
 /**
  * Item master mirrored from the ERP (plan §6.7).

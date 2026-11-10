@@ -1,7 +1,7 @@
 import type { OrderDraft } from "@desk/core";
 import { fixtures } from "@desk/extract";
 import { describe, expect, it } from "vitest";
-import { buildEstimate, buildSalesOrderInput, ConnectorAuthError, ConnectorValidationError, qboAuthorizeUrl, qboScopes, QuickBooksConnector, type QboTokens } from "../src/index.js";
+import { buildEstimate, buildSalesOrderInput, ConnectorAuthError, ConnectorValidationError, qboAuthorizeUrl, qboScopes, QuickBooksConnector, type QboTokens } from "../src/index";
 
 // Recorded-shape fixtures (never a real ERP from tests — CLAUDE.md).
 type Call = { url: string; method: string; headers: Record<string, string>; body: unknown };

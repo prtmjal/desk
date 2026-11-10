@@ -4,19 +4,20 @@
  * connectors) and a tenant id, runs its queries through `withTenant`, and writes
  * the audit log. Nothing here reads process.env or imports Next.js.
  */
-export * from "./audit.js";
-export * from "./blobs.js";
-export * from "./catalog-sync.js";
-export * from "./connectors.js";
-export * from "./context.js";
-export * from "./intake.js";
-export * from "./integrations.js";
-export * from "./learn.js";
-export * from "./mailer.js";
-export * from "./metrics.js";
-export * from "./notify.js";
-export * from "./orders.js";
-export * from "./scope.js";
-export * from "./secrets.js";
-export * from "./tenants.js";
-export * from "./validation.js";
+export * from "./audit";
+export * from "./blobs";
+export * from "./catalog-sync";
+export * from "./connectors";
+export * from "./context";
+export * from "./intake";
+export * from "./integrations";
+export * from "./learn";
+export * from "./mailer";
+export * from "./metrics";
+export * from "./notify";
+export * from "./orders";
+export * from "./scope";
+export * from "./secrets";
+export * from "./tenants";
+export * from "./validation";
+export * from "./queries";

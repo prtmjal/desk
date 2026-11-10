@@ -1,5 +1,5 @@
 import type { CatalogItem, CustomerRecord, OrderDraft } from "@desk/core";
-import { ConnectorValidationError, type CreateSalesOrderResult, type ErpConnector, type PriceListEntry, type StockLevel } from "./connector.js";
+import { ConnectorValidationError, type CreateSalesOrderResult, type ErpConnector, type PriceListEntry, type StockLevel } from "./connector";
 
 /**
  * In-memory connector for tests and demos. Never post to a real ERP from tests (CLAUDE.md).

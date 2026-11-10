@@ -2,10 +2,10 @@
 import type { OrderDraft } from "@desk/core";
 import { inboundMessages, orders, tenantSettings, tenants, withTenant } from "@desk/db";
 import { and, eq } from "drizzle-orm";
-import { logEvent, type Actor } from "./audit.js";
-import { nowOf, ServiceError, type ServiceDeps } from "./context.js";
-import { dashboardMetrics } from "./metrics.js";
-import { effectiveSettings } from "./tenants.js";
+import { logEvent, type Actor } from "./audit";
+import { nowOf, ServiceError, type ServiceDeps } from "./context";
+import { dashboardMetrics } from "./metrics";
+import { effectiveSettings } from "./tenants";
 
 export function renderTemplate(template: string, vars: Record<string, string>): string {
   return template.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, k: string) => vars[k] ?? "");

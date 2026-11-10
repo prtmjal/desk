@@ -1,11 +1,11 @@
 import { integrations, withTenant } from "@desk/db";
 import type { QboTokens } from "@desk/erp";
 import { and, desc, eq } from "drizzle-orm";
-import { logEvent, type Actor } from "./audit.js";
-import { ServiceError, type IntegrationRow, type ServiceDeps } from "./context.js";
-import type { ConnectorKind } from "./connectors.js";
-import { deleteSecret, putSecret, requireSecretsKey } from "./secrets.js";
-import { setRoute } from "./tenants.js";
+import { logEvent, type Actor } from "./audit";
+import { ServiceError, type IntegrationRow, type ServiceDeps } from "./context";
+import type { ConnectorKind } from "./connectors";
+import { deleteSecret, putSecret, requireSecretsKey } from "./secrets";
+import { setRoute } from "./tenants";
 
 export async function listIntegrations(deps: Pick<ServiceDeps, "db">, tenantId: string): Promise<IntegrationRow[]> {
   return withTenant(deps.db, tenantId, (tx) => tx.select().from(integrations).where(eq(integrations.tenantId, tenantId)).orderBy(desc(integrations.updatedAt)));

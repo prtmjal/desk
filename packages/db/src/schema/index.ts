@@ -6,17 +6,17 @@
  * definitions: every tenant-scoped table carries `tenant_id` and must be
  * queried through `withTenant` (src/client.ts).
  */
-export * from "./common.js";
-export * from "./tenants.js";
-export * from "./users.js";
-export * from "./integrations.js";
-export * from "./items.js";
-export * from "./pricing.js";
-export * from "./customers.js";
-export * from "./inbound.js";
-export * from "./orders.js";
-export * from "./aliases.js";
-export * from "./rules.js";
-export * from "./events.js";
-export * from "./billing.js";
-export * from "./waitlist.js";
+export * from "./common";
+export * from "./tenants";
+export * from "./users";
+export * from "./integrations";
+export * from "./items";
+export * from "./pricing";
+export * from "./customers";
+export * from "./inbound";
+export * from "./orders";
+export * from "./aliases";
+export * from "./rules";
+export * from "./events";
+export * from "./billing";
+export * from "./waitlist";

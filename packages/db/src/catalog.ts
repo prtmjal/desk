@@ -15,8 +15,8 @@ import {
   type ScoredItem,
 } from "@desk/core";
 import { and, desc, eq, or, sql } from "drizzle-orm";
-import type { DbOrTx } from "./client.js";
-import { aliases, items } from "./schema/index.js";
+import type { DbOrTx } from "./client";
+import { aliases, items } from "./schema/index";
 
 type ItemRow = typeof items.$inferSelect;
 type ItemInsert = typeof items.$inferInsert;

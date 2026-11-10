@@ -10,13 +10,13 @@ import { createHash } from "node:crypto";
 import { documents, inboundMessages, orders, rules, tenantSettings, withTenant } from "@desk/db";
 import { normalizeInput, processDocument, type RawAttachment } from "@desk/extract";
 import { and, desc, eq, inArray } from "drizzle-orm";
-import { logEvent, SYSTEM, type Actor } from "./audit.js";
-import { joinKey, safeFilename } from "./blobs.js";
-import { errorText, nowOf, ServiceError, type ServiceDeps } from "./context.js";
-import { confirmOrder, insertDraft, markShadowEligible } from "./orders.js";
-import { ScopedCatalog, scopeOf } from "./scope.js";
-import { effectiveSettings } from "./tenants.js";
-import { autoPostPolicyFor, loadCustomerRecords, PgValidationContext, validationPolicyFrom } from "./validation.js";
+import { logEvent, SYSTEM, type Actor } from "./audit";
+import { joinKey, safeFilename } from "./blobs";
+import { errorText, nowOf, ServiceError, type ServiceDeps } from "./context";
+import { confirmOrder, insertDraft, markShadowEligible } from "./orders";
+import { ScopedCatalog, scopeOf } from "./scope";
+import { effectiveSettings } from "./tenants";
+import { autoPostPolicyFor, loadCustomerRecords, PgValidationContext, validationPolicyFrom } from "./validation";
 
 export type InboundInput = {
   source: "email" | "upload";

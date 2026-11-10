@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 import type { OrderDraft } from "@desk/core";
-import { CsvConnector, MockConnector, draftToSalesOrderCsv, parseCustomersCsv, parseItemsCsv, ConnectorValidationError } from "../src/index.js";
+import { CsvConnector, MockConnector, draftToSalesOrderCsv, parseCustomersCsv, parseItemsCsv, ConnectorValidationError } from "../src/index";
 
 const str = (value: string | null) => ({ value, confidence: 0.95, provenance: null });
 const num = (value: number | null) => ({ value, confidence: 0.95, provenance: null });

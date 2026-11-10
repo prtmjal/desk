@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { InMemoryCatalog, matchLine, type Reranker } from "../src/index.js";
-import { ITEMS, line, str, num } from "./fixtures.js";
+import { InMemoryCatalog, matchLine, type Reranker } from "../src/index";
+import { ITEMS, line, str, num } from "./fixtures";
 
 const catalog = () => new InMemoryCatalog(ITEMS);
 

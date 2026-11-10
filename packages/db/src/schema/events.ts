@@ -1,6 +1,6 @@
 import { index, jsonb, pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import { id } from "./common.js";
-import { tenantId } from "./tenants.js";
+import { id } from "./common";
+import { tenantId } from "./tenants";
 
 /**
  * Append-only audit log (plan §6.4 "audit log immutability"). Migration 0001

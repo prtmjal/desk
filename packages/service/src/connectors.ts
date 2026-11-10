@@ -9,8 +9,8 @@ import type { CatalogItem, CustomerRecord, OrderDraft } from "@desk/core";
 import { integrations, withTenant, type Db } from "@desk/db";
 import { ConnectorValidationError, MockConnector, QuickBooksConnector, type CreateSalesOrderResult, type ErpConnector, type QboEnvironment, type QboTokens, type StockLevel } from "@desk/erp";
 import { eq } from "drizzle-orm";
-import type { IntegrationRow } from "./context.js";
-import { getSecret, putSecret } from "./secrets.js";
+import type { IntegrationRow } from "./context";
+import { getSecret, putSecret } from "./secrets";
 
 export type ConnectorKind = "demo" | "csv" | "quickbooks_online";
 

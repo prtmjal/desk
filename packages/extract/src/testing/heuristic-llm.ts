@@ -1,7 +1,7 @@
 import type { CatalogItem, ExtractedLine, ExtractedOrder, ExtractionOutput } from "@desk/core";
-import type { ClassificationOutput, LlmClient, LlmResult, RerankOutput } from "../llm.js";
-import type { NormalizedDocument } from "../normalize/types.js";
-import { address, extractedLine, num, str } from "./fixtures.js";
+import type { ClassificationOutput, LlmClient, LlmResult, RerankOutput } from "../llm";
+import type { NormalizedDocument } from "../normalize/types";
+import { address, extractedLine, num, str } from "./fixtures";
 
 const cost = () => ({ inputTokens: 0, outputTokens: 0, cacheReadTokens: 0, cacheWriteTokens: 0, usd: 0, calls: 1 });
 
@@ -30,7 +30,8 @@ export class HeuristicLlm implements LlmClient {
   async extract(doc: NormalizedDocument): Promise<LlmResult<ExtractionOutput>> {
     const text = allText(doc);
     const lines = parseLines(text);
-    const po = text.match(/\b(?:P\.?O\.?|purchase order)\s*(?:number|no\.?|#)?\s*[:#,]?\s*([A-Z0-9][A-Z0-9-]{2,})/i)?.[1] ?? null;
+    // "PO" must stand alone (not the start of "Point") and the number must contain a digit.
+    const po = text.match(/\b(?:P\.?O\.?(?![a-z])|purchase order)\s*(?:number|no\.?|#)?\s*[:#,]?\s*((?=[A-Z0-9-]*\d)[A-Z0-9][A-Z0-9-]{2,})/i)?.[1] ?? null;
     const shipDate = text.match(/\b(?:ship|need|deliver|required)\s*(?:by|date)?\s*[:,]?\s*(\d{4}-\d{2}-\d{2})/i)?.[1] ?? null;
     const empty = str(null, 0);
     const order: ExtractedOrder = {

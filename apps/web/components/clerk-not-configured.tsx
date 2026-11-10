@@ -24,6 +24,11 @@ export function ClerkNotConfigured({ feature }: { feature: string }) {
           route. Add <code>STRIPE_SECRET_KEY</code> to create a Stripe customer when an organization
           is created.
         </p>
+        <p className="mt-4 text-xs text-muted">
+          To explore the product without any accounts, start the dev server in demo mode:{" "}
+          <code className="rounded bg-bg-subtle px-1.5 py-0.5">DESK_DEMO=1 pnpm --filter @desk/web dev</code>. It uses a sample
+          distributor, an in-process database and an offline parser.
+        </p>
         <Link href="/" className="btn-secondary mt-6">
           Back to the site
         </Link>
