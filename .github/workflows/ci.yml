@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI: true
+  NEXT_TELEMETRY_DISABLED: 1
+  TURBO_TELEMETRY_DISABLED: 1
+  DO_NOT_TRACK: 1
+
+jobs:
+  verify:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      # Reads the pnpm version from "packageManager" in the root package.json.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Test
+        run: pnpm test
+
+      # Evals are a stub until the golden set exists (plan §7.5 Phase 1).
+      # Allowed to fail so a missing dataset does not block unrelated changes;
+      # remove continue-on-error once the eval runner reports real scores.
+      - name: Evals (stub)
+        run: pnpm evals
+        continue-on-error: true
+
+      # The marketing site must build with no Clerk/Stripe keys at all;
+      # only public, non-secret values are provided here.
+      - name: Build web
+        run: pnpm --filter @desk/web build
+        env:
+          APP_URL: https://desk.example.com
+          NEXT_PUBLIC_POSTHOG_KEY: phc_ci_placeholder
+          NEXT_PUBLIC_POSTHOG_HOST: https://us.i.posthog.com

@@ -1,0 +1,24 @@
+{
+  "name": "@desk/scripts",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "One-off CLIs: replay a PO, import item master, backfill",
+  "scripts": {
+    "replay": "tsx src/replay.ts",
+    "import-items": "tsx src/import-items.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@desk/core": "workspace:^",
+    "@desk/db": "workspace:^",
+    "@desk/erp": "workspace:^",
+    "@desk/evals": "workspace:^",
+    "@desk/extract": "workspace:^"
+  },
+  "devDependencies": {
+    "tsx": "^4.23.15"
+  }
+}

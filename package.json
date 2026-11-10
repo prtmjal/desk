@@ -1,0 +1,30 @@
+{
+  "name": "desk",
+  "private": true,
+  "version": "0.0.1",
+  "description": "DESK — AI order desk for SMB distributors and light manufacturers",
+  "packageManager": "pnpm@10.0.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "evals": "pnpm --filter @desk/evals run evals",
+    "replay": "pnpm --filter @desk/scripts run replay",
+    "db:generate": "pnpm --filter @desk/db run generate",
+    "db:migrate": "pnpm --filter @desk/db run migrate",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\""
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "prettier": "^3.5.0",
+    "tsx": "^4.23.15",
+    "turbo": "^2.5.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.1.0"
+  }
+}
