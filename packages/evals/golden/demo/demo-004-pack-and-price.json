@@ -1,0 +1,743 @@
+{
+  "id": "demo-004-pack-and-price",
+  "kind": "excel",
+  "tenant": "demo",
+  "tags": [
+    "price-mismatch",
+    "pack-rounding"
+  ],
+  "input": {
+    "sender": "purchasing@acmeelectric.com",
+    "subject": "Revised PO 4471",
+    "bodyText": "Revised PO attached, price per our contract.",
+    "attachments": [
+      "po-004.csv"
+    ]
+  },
+  "expected": {
+    "extraction": {
+      "documentType": "order",
+      "documentTypeConfidence": 0.97,
+      "language": "en",
+      "orders": [
+        {
+          "poNumber": {
+            "value": "PO-4471-R1",
+            "confidence": 0.99,
+            "provenance": {
+              "page": 1,
+              "quote": "PO-4471-R1"
+            }
+          },
+          "orderDate": {
+            "value": "2026-11-05",
+            "confidence": 0.97,
+            "provenance": {
+              "page": 1,
+              "quote": "2026-11-05"
+            }
+          },
+          "requestedShipDate": {
+            "value": "2026-11-12",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "2026-11-12"
+            }
+          },
+          "customer": {
+            "name": {
+              "value": "Acme Electric Contractors",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Acme Electric Contractors"
+              }
+            },
+            "accountNumber": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "contactName": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "email": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "phone": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            }
+          },
+          "billTo": {
+            "name": {
+              "value": "Acme Electric Contractors",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Acme Electric Contractors"
+              }
+            },
+            "attention": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "line1": {
+              "value": "100 Industrial Pkwy",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "100 Industrial Pkwy"
+              }
+            },
+            "line2": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "city": {
+              "value": "Dallas",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Dallas"
+              }
+            },
+            "region": {
+              "value": "TX",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "TX"
+              }
+            },
+            "postalCode": {
+              "value": "75201",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "75201"
+              }
+            },
+            "country": {
+              "value": "US",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "US"
+              }
+            }
+          },
+          "shipTo": {
+            "name": {
+              "value": "Acme Electric Contractors",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Acme Electric Contractors"
+              }
+            },
+            "attention": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "line1": {
+              "value": "100 Industrial Pkwy",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "100 Industrial Pkwy"
+              }
+            },
+            "line2": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "city": {
+              "value": "Dallas",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Dallas"
+              }
+            },
+            "region": {
+              "value": "TX",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "TX"
+              }
+            },
+            "postalCode": {
+              "value": "75201",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "75201"
+              }
+            },
+            "country": {
+              "value": "US",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "US"
+              }
+            }
+          },
+          "paymentTerms": {
+            "value": "Net 30",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "Net 30"
+            }
+          },
+          "shippingMethod": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "currency": {
+            "value": "USD",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "USD"
+            }
+          },
+          "subtotal": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "tax": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "freight": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "total": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "specialInstructions": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "lines": [
+            {
+              "lineNo": 1,
+              "customerLineRef": {
+                "value": null,
+                "confidence": 0,
+                "provenance": null
+              },
+              "rawPartNumber": {
+                "value": "EMT-075-10",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "EMT-075-10"
+                }
+              },
+              "rawDescription": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "quantity": {
+                "value": 25,
+                "confidence": 0.99,
+                "provenance": {
+                  "page": 1,
+                  "quote": "25"
+                }
+              },
+              "rawUom": {
+                "value": "EA",
+                "confidence": 0.95,
+                "provenance": {
+                  "page": 1,
+                  "quote": "EA"
+                }
+              },
+              "unitPrice": {
+                "value": 5,
+                "confidence": 0.96,
+                "provenance": {
+                  "page": 1,
+                  "quote": "5"
+                }
+              },
+              "extendedPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "requestedDate": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "notes": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              }
+            },
+            {
+              "lineNo": 2,
+              "customerLineRef": {
+                "value": null,
+                "confidence": 0,
+                "provenance": null
+              },
+              "rawPartNumber": {
+                "value": "WN-RED-100",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "WN-RED-100"
+                }
+              },
+              "rawDescription": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "quantity": {
+                "value": 2,
+                "confidence": 0.99,
+                "provenance": {
+                  "page": 1,
+                  "quote": "2"
+                }
+              },
+              "rawUom": {
+                "value": "CS",
+                "confidence": 0.95,
+                "provenance": {
+                  "page": 1,
+                  "quote": "CS"
+                }
+              },
+              "unitPrice": {
+                "value": 70,
+                "confidence": 0.96,
+                "provenance": {
+                  "page": 1,
+                  "quote": "70"
+                }
+              },
+              "extendedPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "requestedDate": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "notes": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              }
+            }
+          ],
+          "pageRange": {
+            "from": 1,
+            "to": 1
+          }
+        }
+      ],
+      "warnings": []
+    },
+    "matches": {
+      "1": "i3",
+      "2": "i5"
+    },
+    "customerId": "c1",
+    "safeToAutoPost": false
+  },
+  "cached": {
+    "extraction": {
+      "documentType": "order",
+      "documentTypeConfidence": 0.97,
+      "language": "en",
+      "orders": [
+        {
+          "poNumber": {
+            "value": "PO-4471-R1",
+            "confidence": 0.99,
+            "provenance": {
+              "page": 1,
+              "quote": "PO-4471-R1"
+            }
+          },
+          "orderDate": {
+            "value": "2026-11-05",
+            "confidence": 0.97,
+            "provenance": {
+              "page": 1,
+              "quote": "2026-11-05"
+            }
+          },
+          "requestedShipDate": {
+            "value": "2026-11-12",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "2026-11-12"
+            }
+          },
+          "customer": {
+            "name": {
+              "value": "Acme Electric Contractors",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Acme Electric Contractors"
+              }
+            },
+            "accountNumber": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "contactName": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "email": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "phone": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            }
+          },
+          "billTo": {
+            "name": {
+              "value": "Acme Electric Contractors",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Acme Electric Contractors"
+              }
+            },
+            "attention": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "line1": {
+              "value": "100 Industrial Pkwy",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "100 Industrial Pkwy"
+              }
+            },
+            "line2": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "city": {
+              "value": "Dallas",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Dallas"
+              }
+            },
+            "region": {
+              "value": "TX",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "TX"
+              }
+            },
+            "postalCode": {
+              "value": "75201",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "75201"
+              }
+            },
+            "country": {
+              "value": "US",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "US"
+              }
+            }
+          },
+          "shipTo": {
+            "name": {
+              "value": "Acme Electric Contractors",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Acme Electric Contractors"
+              }
+            },
+            "attention": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "line1": {
+              "value": "100 Industrial Pkwy",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "100 Industrial Pkwy"
+              }
+            },
+            "line2": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "city": {
+              "value": "Dallas",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Dallas"
+              }
+            },
+            "region": {
+              "value": "TX",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "TX"
+              }
+            },
+            "postalCode": {
+              "value": "75201",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "75201"
+              }
+            },
+            "country": {
+              "value": "US",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "US"
+              }
+            }
+          },
+          "paymentTerms": {
+            "value": "Net 30",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "Net 30"
+            }
+          },
+          "shippingMethod": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "currency": {
+            "value": "USD",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "USD"
+            }
+          },
+          "subtotal": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "tax": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "freight": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "total": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "specialInstructions": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "lines": [
+            {
+              "lineNo": 1,
+              "customerLineRef": {
+                "value": null,
+                "confidence": 0,
+                "provenance": null
+              },
+              "rawPartNumber": {
+                "value": "EMT-075-10",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "EMT-075-10"
+                }
+              },
+              "rawDescription": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "quantity": {
+                "value": 25,
+                "confidence": 0.99,
+                "provenance": {
+                  "page": 1,
+                  "quote": "25"
+                }
+              },
+              "rawUom": {
+                "value": "EA",
+                "confidence": 0.95,
+                "provenance": {
+                  "page": 1,
+                  "quote": "EA"
+                }
+              },
+              "unitPrice": {
+                "value": 5,
+                "confidence": 0.96,
+                "provenance": {
+                  "page": 1,
+                  "quote": "5"
+                }
+              },
+              "extendedPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "requestedDate": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "notes": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              }
+            },
+            {
+              "lineNo": 2,
+              "customerLineRef": {
+                "value": null,
+                "confidence": 0,
+                "provenance": null
+              },
+              "rawPartNumber": {
+                "value": "WN-RED-100",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "WN-RED-100"
+                }
+              },
+              "rawDescription": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "quantity": {
+                "value": 2,
+                "confidence": 0.99,
+                "provenance": {
+                  "page": 1,
+                  "quote": "2"
+                }
+              },
+              "rawUom": {
+                "value": "CS",
+                "confidence": 0.95,
+                "provenance": {
+                  "page": 1,
+                  "quote": "CS"
+                }
+              },
+              "unitPrice": {
+                "value": 70,
+                "confidence": 0.96,
+                "provenance": {
+                  "page": 1,
+                  "quote": "70"
+                }
+              },
+              "extendedPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "requestedDate": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "notes": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              }
+            }
+          ],
+          "pageRange": {
+            "from": 1,
+            "to": 1
+          }
+        }
+      ],
+      "warnings": []
+    },
+    "model": "synthetic",
+    "promptVersion": "extract-order.v1",
+    "recordedAt": "2026-11-07T00:00:00.000Z",
+    "rerank": {}
+  }
+}

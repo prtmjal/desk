@@ -118,6 +118,10 @@ importers:
       zod:
         specifier: ^4.6.7
         version: 4.6.7
+    devDependencies:
+      '@desk/extract':
+        specifier: workspace:^
+        version: link:../extract
 
   packages/evals:
     dependencies:
@@ -162,6 +166,30 @@ importers:
       '@types/papaparse':
         specifier: ^5.5.2
         version: 5.5.2
+
+  packages/service:
+    dependencies:
+      '@desk/core':
+        specifier: workspace:^
+        version: link:../core
+      '@desk/db':
+        specifier: workspace:^
+        version: link:../db
+      '@desk/erp':
+        specifier: workspace:^
+        version: link:../erp
+      '@desk/extract':
+        specifier: workspace:^
+        version: link:../extract
+      aws4fetch:
+        specifier: ^1.0.20
+        version: 1.0.20
+      drizzle-orm:
+        specifier: ^0.45.4
+        version: 0.45.4(@electric-sql/pglite@0.5.15)(@opentelemetry/api@1.10.0)(@types/pg@8.23.1)(pg@8.23.1)
+      zod:
+        specifier: ^4.6.7
+        version: 4.6.7
 
   scripts:
     dependencies:
@@ -1274,6 +1302,9 @@ packages:
   available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
+
+  aws4fetch@1.0.20:
+    resolution: {integrity: sha512-/djoAN709iY65ETD6LKCtyyEI04XIBP5xVvfmNxsEP0uJB5tyaGBztSryRr4HqMStr9R06PisQE7m9zDTXKu6g==}
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -3327,6 +3358,8 @@ snapshots:
   available-typed-arrays@1.0.7:
     dependencies:
       possible-typed-array-names: 1.1.0
+
+  aws4fetch@1.0.20: {}
 
   balanced-match@1.0.2: {}
 

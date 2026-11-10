@@ -1,4 +1,4 @@
-import { index, integer, jsonb, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { index, integer, jsonb, pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
 import { id, timestamps } from "./common.js";
 import { tenantId } from "./tenants.js";
 
@@ -43,4 +43,21 @@ export const syncRuns = pgTable(
     error: text("error"),
   },
   (t) => [index("sync_runs_tenant_idx").on(t.tenantId, t.integrationId, t.startedAt)],
+);
+
+/**
+ * Encrypted credentials (OAuth tokens, API keys). `integrations.credentials_ref`
+ * points at `ref`. Values are AES-256-GCM ciphertext produced by @desk/service
+ * with DESK_SECRETS_KEY; the database never sees plaintext. Tenant-scoped (RLS).
+ */
+export const secrets = pgTable(
+  "secrets",
+  {
+    id: id(),
+    tenantId: tenantId(),
+    ref: text("ref").notNull(),
+    ciphertext: text("ciphertext").notNull(),
+    ...timestamps(),
+  },
+  (t) => [unique("secrets_tenant_ref_uq").on(t.tenantId, t.ref)],
 );

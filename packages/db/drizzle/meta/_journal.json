@@ -15,6 +15,13 @@
       "when": 1794011079871,
       "tag": "0001_rls_extensions_trigram",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794345634152,
+      "tag": "0002_confused_hemingway",
+      "breakpoints": true
     }
   ]
 }

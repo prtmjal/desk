@@ -23,6 +23,12 @@ export const inboundMessages = pgTable(
     classification: text("classification"),
     /** received | processing | processed | ignored | failed */
     status: text("status").notNull().default("received"),
+    /** email | upload */
+    source: text("source").notNull().default("email"),
+    /** Why processing failed or the message was ignored. */
+    error: text("error"),
+    /** Model cost for this message in USD (plan §6.4 cost budget). */
+    costUsd: text("cost_usd"),
     ...timestamps(),
   },
   (t) => [

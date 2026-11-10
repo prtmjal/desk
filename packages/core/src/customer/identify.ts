@@ -26,6 +26,11 @@ const FREE_MAIL = new Set([
   "comcast.net", "att.net", "proton.me", "protonmail.com",
 ]);
 
+/** Free-mail providers never identify a company. */
+export function isFreeMailDomain(domain: string | null | undefined): boolean {
+  return !!domain && FREE_MAIL.has(domain.toLowerCase());
+}
+
 export function domainOf(email: string | null | undefined): string | null {
   if (!email) return null;
   const m = email.toLowerCase().match(/@([a-z0-9.-]+\.[a-z]{2,})/);

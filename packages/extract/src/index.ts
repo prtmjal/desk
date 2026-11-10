@@ -9,3 +9,4 @@ export * from "./pipeline.js";
 export { loadPrompt, renderPrompt, parseFrontMatter, type LoadedPrompt, type PromptName } from "./prompts/index.js";
 export { FakeLlm } from "./testing/fake-llm.js";
 export * as fixtures from "./testing/fixtures.js";
+export { HeuristicLlm } from "./testing/heuristic-llm.js";

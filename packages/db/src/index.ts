@@ -11,3 +11,5 @@ export { PgCatalogIndex, withItemKeys, toCatalogItem, toAlias } from "./catalog.
 export { MIGRATIONS_FOLDER, runMigrations } from "./migrate.js";
 export { seedDemo, DEMO_TENANT_ID, DEMO_ITEMS, DEMO_CUSTOMERS } from "./seed.js";
 export type { SeedResult } from "./seed.js";
+export { createPgliteDb } from "./pglite.js";
+export type { PgliteDb, PgliteContext } from "./pglite.js";

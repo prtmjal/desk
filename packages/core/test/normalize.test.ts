@@ -67,6 +67,12 @@ describe("uom", () => {
     expect(resolveUom("ea", pack)).toMatchObject({ ok: true, factor: 1 });
     expect(resolveUom(null, pack)).toMatchObject({ ok: true, factor: 1 });
     expect(resolveUom("pallet", pack).ok).toBe(false);
+    // Units outside the synonym table are flagged, never read as the base unit.
+    expect(resolveUom("skein", pack).ok).toBe(false);
+    // Bundles, and factor keys spelled the ERP's way.
+    expect(resolveUom("bundle", { baseUom: "EA", factors: { BD: 100 } })).toMatchObject({ ok: true, factor: 100 });
+    expect(resolveUom("BDL", { baseUom: "EA", factors: { BDL: 10 } })).toMatchObject({ ok: true, factor: 10 });
+    expect(resolveUom("ea", { baseUom: "Each" })).toMatchObject({ ok: true, factor: 1 });
   });
   it("rounds up to multiples and raises to minimum", () => {
     expect(applyPackRules(25, { baseUom: "EA", multipleOf: 10 })).toMatchObject({ qty: 30, rounded: true });
