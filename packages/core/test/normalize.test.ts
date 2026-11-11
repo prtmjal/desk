@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { normalizePartNumber, partNumberVariants, tokenize, normalizeDimensions, normalizeDescription } from "../src/index.js";
-import { similarity, coverage } from "../src/index.js";
-import { normalizeUom, resolveUom, applyPackRules } from "../src/index.js";
+import { normalizePartNumber, partNumberVariants, tokenize, normalizeDimensions, normalizeDescription } from "../src/index";
+import { similarity, coverage } from "../src/index";
+import { normalizeUom, resolveUom, applyPackRules } from "../src/index";
 
 describe("normalizePartNumber", () => {
   it("collapses punctuation and case", () => {
@@ -67,6 +67,12 @@ describe("uom", () => {
     expect(resolveUom("ea", pack)).toMatchObject({ ok: true, factor: 1 });
     expect(resolveUom(null, pack)).toMatchObject({ ok: true, factor: 1 });
     expect(resolveUom("pallet", pack).ok).toBe(false);
+    // Units outside the synonym table are flagged, never read as the base unit.
+    expect(resolveUom("skein", pack).ok).toBe(false);
+    // Bundles, and factor keys spelled the ERP's way.
+    expect(resolveUom("bundle", { baseUom: "EA", factors: { BD: 100 } })).toMatchObject({ ok: true, factor: 100 });
+    expect(resolveUom("BDL", { baseUom: "EA", factors: { BDL: 10 } })).toMatchObject({ ok: true, factor: 10 });
+    expect(resolveUom("ea", { baseUom: "Each" })).toMatchObject({ ok: true, factor: 1 });
   });
   it("rounds up to multiples and raises to minimum", () => {
     expect(applyPackRules(25, { baseUom: "EA", multipleOf: 10 })).toMatchObject({ qty: 30, rounded: true });

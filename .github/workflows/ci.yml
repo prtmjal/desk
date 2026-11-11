@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, development]
   pull_request:
 
 concurrency:
@@ -43,14 +43,11 @@ jobs:
       - name: Test
         run: pnpm test
 
-      # Evals are a stub until the golden set exists (plan §7.5 Phase 1).
-      # Allowed to fail so a missing dataset does not block unrelated changes;
-      # remove continue-on-error once the eval runner reports real scores.
-      - name: Evals (stub)
+      # Offline release gate on the demo golden set (cached model outputs, no API key, no cost).
+      - name: Evals
         run: pnpm evals
-        continue-on-error: true
 
-      # The marketing site must build with no Clerk/Stripe keys at all;
+      # The whole app must build with no secrets at all (integrations are gated on env);
       # only public, non-secret values are provided here.
       - name: Build web
         run: pnpm --filter @desk/web build

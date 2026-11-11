@@ -1,14 +1,28 @@
 import { sql } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { withTenant } from "../src/client.js";
-import { withItemKeys } from "../src/catalog.js";
-import { customers, documents, inboundMessages, items, orders, tenants } from "../src/schema/index.js";
-import { createTestDb, type TestContext } from "./pglite.js";
+import { withTenant } from "../src/client";
+import { withItemKeys } from "../src/catalog";
+import { customers, documents, inboundMessages, items, orders, tenants } from "../src/schema/index";
+import { createTestDb, type TestContext } from "./pglite";
 
 const TENANT_A = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
 const TENANT_B = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
 
 let ctx: TestContext;
+
+/** Drizzle wraps driver errors ("Failed query: ...") and keeps the Postgres error on `.cause`. */
+async function expectPgError(p: Promise<unknown>, pattern: RegExp): Promise<void> {
+  let caught: unknown = null;
+  try {
+    await p;
+  } catch (err) {
+    caught = err;
+  }
+  expect(caught, "expected the query to be rejected").not.toBeNull();
+  const messages: string[] = [];
+  for (let e: unknown = caught; e instanceof Error; e = e.cause) messages.push(e.message);
+  expect(messages.join(" | ")).toMatch(pattern);
+}
 
 beforeAll(async () => {
   ctx = await createTestDb();
@@ -82,11 +96,12 @@ describe("row-level security", () => {
   });
 
   it("(b) rejects an insert whose tenant_id does not match the session tenant", async () => {
-    await expect(
+    await expectPgError(
       withTenant(ctx.db, TENANT_A, (tx) =>
         tx.insert(items).values(withItemKeys({ tenantId: TENANT_B, sku: "SNEAKY", description: "cross-tenant write" })),
       ),
-    ).rejects.toThrow(/row-level security/i);
+      /row-level security/i,
+    );
 
     // Nothing landed for either tenant.
     const bItems = await withTenant(ctx.db, TENANT_B, (tx) => tx.select().from(items));
@@ -123,11 +138,12 @@ describe("row-level security", () => {
 
 describe("idempotency constraints", () => {
   it("(d) rejects duplicate (tenant, sku) but allows the same sku in another tenant", async () => {
-    await expect(
+    await expectPgError(
       withTenant(ctx.db, TENANT_A, (tx) =>
         tx.insert(items).values(withItemKeys({ tenantId: TENANT_A, sku: "A-100", description: "dupe" })),
       ),
-    ).rejects.toThrow(/items_tenant_sku_uq|duplicate key/i);
+      /items_tenant_sku_uq|duplicate key/i,
+    );
 
     await withTenant(ctx.db, TENANT_B, (tx) =>
       tx.insert(items).values(withItemKeys({ tenantId: TENANT_B, sku: "A-100", description: "B's own A-100" })),
@@ -145,17 +161,19 @@ describe("idempotency constraints", () => {
       await tx.insert(documents).values({ tenantId: TENANT_A, messageId: msg!.id, filename: "po.pdf", hash: "deadbeef" });
     });
 
-    await expect(
+    await expectPgError(
       withTenant(ctx.db, TENANT_A, (tx) =>
         tx.insert(inboundMessages).values({ tenantId: TENANT_A, messageId: "<m1@example.com>" }),
       ),
-    ).rejects.toThrow(/inbound_messages_tenant_message_uq|duplicate key/i);
+      /inbound_messages_tenant_message_uq|duplicate key/i,
+    );
 
-    await expect(
+    await expectPgError(
       withTenant(ctx.db, TENANT_A, (tx) =>
         tx.insert(documents).values({ tenantId: TENANT_A, filename: "po-again.pdf", hash: "deadbeef" }),
       ),
-    ).rejects.toThrow(/documents_tenant_hash_uq|duplicate key/i);
+      /documents_tenant_hash_uq|duplicate key/i,
+    );
 
     // Same message id for tenant B is fine.
     await withTenant(ctx.db, TENANT_B, (tx) =>
@@ -163,23 +181,36 @@ describe("idempotency constraints", () => {
     );
   });
 
-  it("detects a duplicate PO per customer unless the earlier order was rejected", async () => {
+  it("allows a duplicate PO to wait in review but never to be confirmed twice", async () => {
     const custId = await withTenant(ctx.db, TENANT_A, async (tx) => {
       const [c] = await tx.select({ id: customers.id }).from(customers);
       return c!.id;
     });
 
-    await expect(
-      withTenant(ctx.db, TENANT_A, (tx) =>
-        tx.insert(orders).values({ tenantId: TENANT_A, customerId: custId, poNumber: "PO-1", status: "needs_review" }),
-      ),
-    ).rejects.toThrow(/orders_tenant_customer_po_uq|duplicate key/i);
+    // The original (inserted above) has been posted to the ERP.
+    await withTenant(ctx.db, TENANT_A, (tx) => tx.update(orders).set({ status: "posted" }).where(sql`${orders.poNumber} = 'PO-1'`));
 
+    // A second copy of the PO can sit in the review queue (it is flagged DUPLICATE_PO there)...
+    const dupId = await withTenant(ctx.db, TENANT_A, async (tx) => {
+      const [o] = await tx
+        .insert(orders)
+        .values({ tenantId: TENANT_A, customerId: custId, poNumber: "PO-1", status: "needs_review" })
+        .returning({ id: orders.id });
+      return o!.id;
+    });
+
+    // ...but it cannot be confirmed while the first one is confirmed or posted.
+    await expectPgError(
+      withTenant(ctx.db, TENANT_A, (tx) => tx.update(orders).set({ status: "confirmed" }).where(sql`${orders.id} = ${dupId}`)),
+      /orders_tenant_customer_po_uq|duplicate key/i,
+    );
+
+    // Rejecting the original frees the PO number.
     await withTenant(ctx.db, TENANT_A, async (tx) => {
-      await tx.update(orders).set({ status: "rejected" });
-      await tx.insert(orders).values({ tenantId: TENANT_A, customerId: custId, poNumber: "PO-1", status: "new" });
+      await tx.update(orders).set({ status: "rejected" }).where(sql`${orders.id} <> ${dupId}`);
+      await tx.update(orders).set({ status: "confirmed" }).where(sql`${orders.id} = ${dupId}`);
       const all = await tx.select({ status: orders.status }).from(orders);
-      expect(all.map((o) => o.status).sort()).toEqual(["new", "rejected"]);
+      expect(all.map((o) => o.status).sort()).toEqual(["confirmed", "rejected"]);
     });
   });
 });

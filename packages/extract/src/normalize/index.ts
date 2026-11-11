@@ -1,3 +1,3 @@
-export * from "./types.js";
-export * from "./normalize.js";
-export * from "./to-content.js";
+export * from "./types";
+export * from "./normalize";
+export * from "./to-content";

@@ -1,7 +1,7 @@
-import type { ExtractedLine, MatchCandidate, MatchResult } from "../schema/index.js";
-import type { CatalogIndex, CatalogItem, ScoredItem } from "./catalog.js";
-import { normalizeDescription, partNumberVariants } from "./normalize.js";
-import { resolveUom } from "./uom.js";
+import type { ExtractedLine, MatchCandidate, MatchResult } from "../schema/index";
+import type { CatalogIndex, CatalogItem, ScoredItem } from "./catalog";
+import { normalizeDescription, partNumberVariants } from "./normalize";
+import { resolveUom } from "./uom";
 
 /**
  * L4: LLM re-rank. Implemented in @desk/extract; core only knows the shape so

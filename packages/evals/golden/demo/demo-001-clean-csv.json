@@ -1,0 +1,882 @@
+{
+  "id": "demo-001-clean-csv",
+  "kind": "excel",
+  "tenant": "demo",
+  "tags": [
+    "exact",
+    "multi-line"
+  ],
+  "input": {
+    "sender": "purchasing@acmeelectric.com",
+    "subject": "PO 4471",
+    "bodyText": null,
+    "attachments": [
+      "po-001.csv"
+    ]
+  },
+  "expected": {
+    "extraction": {
+      "documentType": "order",
+      "documentTypeConfidence": 0.97,
+      "language": "en",
+      "orders": [
+        {
+          "poNumber": {
+            "value": "PO-4471",
+            "confidence": 0.99,
+            "provenance": {
+              "page": 1,
+              "quote": "PO-4471"
+            }
+          },
+          "orderDate": {
+            "value": "2026-11-05",
+            "confidence": 0.97,
+            "provenance": {
+              "page": 1,
+              "quote": "2026-11-05"
+            }
+          },
+          "requestedShipDate": {
+            "value": "2026-11-12",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "2026-11-12"
+            }
+          },
+          "customer": {
+            "name": {
+              "value": "Acme Electric Contractors",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Acme Electric Contractors"
+              }
+            },
+            "accountNumber": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "contactName": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "email": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "phone": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            }
+          },
+          "billTo": {
+            "name": {
+              "value": "Acme Electric Contractors",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Acme Electric Contractors"
+              }
+            },
+            "attention": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "line1": {
+              "value": "100 Industrial Pkwy",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "100 Industrial Pkwy"
+              }
+            },
+            "line2": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "city": {
+              "value": "Dallas",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Dallas"
+              }
+            },
+            "region": {
+              "value": "TX",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "TX"
+              }
+            },
+            "postalCode": {
+              "value": "75201",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "75201"
+              }
+            },
+            "country": {
+              "value": "US",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "US"
+              }
+            }
+          },
+          "shipTo": {
+            "name": {
+              "value": "Acme Electric Contractors",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Acme Electric Contractors"
+              }
+            },
+            "attention": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "line1": {
+              "value": "100 Industrial Pkwy",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "100 Industrial Pkwy"
+              }
+            },
+            "line2": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "city": {
+              "value": "Dallas",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Dallas"
+              }
+            },
+            "region": {
+              "value": "TX",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "TX"
+              }
+            },
+            "postalCode": {
+              "value": "75201",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "75201"
+              }
+            },
+            "country": {
+              "value": "US",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "US"
+              }
+            }
+          },
+          "paymentTerms": {
+            "value": "Net 30",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "Net 30"
+            }
+          },
+          "shippingMethod": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "currency": {
+            "value": "USD",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "USD"
+            }
+          },
+          "subtotal": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "tax": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "freight": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "total": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "specialInstructions": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "lines": [
+            {
+              "lineNo": 1,
+              "customerLineRef": {
+                "value": null,
+                "confidence": 0,
+                "provenance": null
+              },
+              "rawPartNumber": {
+                "value": "THHN-12-BLK-500",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "THHN-12-BLK-500"
+                }
+              },
+              "rawDescription": {
+                "value": "12 AWG THHN black 500ft",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "12 AWG THHN black 500ft"
+                }
+              },
+              "quantity": {
+                "value": 2,
+                "confidence": 0.99,
+                "provenance": {
+                  "page": 1,
+                  "quote": "2"
+                }
+              },
+              "rawUom": {
+                "value": "CS",
+                "confidence": 0.95,
+                "provenance": {
+                  "page": 1,
+                  "quote": "CS"
+                }
+              },
+              "unitPrice": {
+                "value": 358,
+                "confidence": 0.96,
+                "provenance": {
+                  "page": 1,
+                  "quote": "358"
+                }
+              },
+              "extendedPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "requestedDate": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "notes": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              }
+            },
+            {
+              "lineNo": 2,
+              "customerLineRef": {
+                "value": null,
+                "confidence": 0,
+                "provenance": null
+              },
+              "rawPartNumber": {
+                "value": "GFCI-20-WH",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "GFCI-20-WH"
+                }
+              },
+              "rawDescription": {
+                "value": "20A GFCI receptacle white TR",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "20A GFCI receptacle white TR"
+                }
+              },
+              "quantity": {
+                "value": 10,
+                "confidence": 0.99,
+                "provenance": {
+                  "page": 1,
+                  "quote": "10"
+                }
+              },
+              "rawUom": {
+                "value": "EA",
+                "confidence": 0.95,
+                "provenance": {
+                  "page": 1,
+                  "quote": "EA"
+                }
+              },
+              "unitPrice": {
+                "value": 18.9,
+                "confidence": 0.96,
+                "provenance": {
+                  "page": 1,
+                  "quote": "18.9"
+                }
+              },
+              "extendedPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "requestedDate": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "notes": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              }
+            },
+            {
+              "lineNo": 3,
+              "customerLineRef": {
+                "value": null,
+                "confidence": 0,
+                "provenance": null
+              },
+              "rawPartNumber": {
+                "value": "012345678950",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "012345678950"
+                }
+              },
+              "rawDescription": {
+                "value": "4in square box deep",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "4in square box deep"
+                }
+              },
+              "quantity": {
+                "value": 100,
+                "confidence": 0.99,
+                "provenance": {
+                  "page": 1,
+                  "quote": "100"
+                }
+              },
+              "rawUom": {
+                "value": "EA",
+                "confidence": 0.95,
+                "provenance": {
+                  "page": 1,
+                  "quote": "EA"
+                }
+              },
+              "unitPrice": {
+                "value": 2.4,
+                "confidence": 0.96,
+                "provenance": {
+                  "page": 1,
+                  "quote": "2.4"
+                }
+              },
+              "extendedPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "requestedDate": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "notes": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              }
+            }
+          ],
+          "pageRange": {
+            "from": 1,
+            "to": 1
+          }
+        }
+      ],
+      "warnings": []
+    },
+    "matches": {
+      "1": "i1",
+      "2": "i8",
+      "3": "i6"
+    },
+    "customerId": "c1",
+    "safeToAutoPost": true
+  },
+  "cached": {
+    "extraction": {
+      "documentType": "order",
+      "documentTypeConfidence": 0.97,
+      "language": "en",
+      "orders": [
+        {
+          "poNumber": {
+            "value": "PO-4471",
+            "confidence": 0.99,
+            "provenance": {
+              "page": 1,
+              "quote": "PO-4471"
+            }
+          },
+          "orderDate": {
+            "value": "2026-11-05",
+            "confidence": 0.97,
+            "provenance": {
+              "page": 1,
+              "quote": "2026-11-05"
+            }
+          },
+          "requestedShipDate": {
+            "value": "2026-11-12",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "2026-11-12"
+            }
+          },
+          "customer": {
+            "name": {
+              "value": "Acme Electric Contractors",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Acme Electric Contractors"
+              }
+            },
+            "accountNumber": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "contactName": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "email": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "phone": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            }
+          },
+          "billTo": {
+            "name": {
+              "value": "Acme Electric Contractors",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Acme Electric Contractors"
+              }
+            },
+            "attention": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "line1": {
+              "value": "100 Industrial Pkwy",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "100 Industrial Pkwy"
+              }
+            },
+            "line2": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "city": {
+              "value": "Dallas",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Dallas"
+              }
+            },
+            "region": {
+              "value": "TX",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "TX"
+              }
+            },
+            "postalCode": {
+              "value": "75201",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "75201"
+              }
+            },
+            "country": {
+              "value": "US",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "US"
+              }
+            }
+          },
+          "shipTo": {
+            "name": {
+              "value": "Acme Electric Contractors",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Acme Electric Contractors"
+              }
+            },
+            "attention": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "line1": {
+              "value": "100 Industrial Pkwy",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "100 Industrial Pkwy"
+              }
+            },
+            "line2": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "city": {
+              "value": "Dallas",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Dallas"
+              }
+            },
+            "region": {
+              "value": "TX",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "TX"
+              }
+            },
+            "postalCode": {
+              "value": "75201",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "75201"
+              }
+            },
+            "country": {
+              "value": "US",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "US"
+              }
+            }
+          },
+          "paymentTerms": {
+            "value": "Net 30",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "Net 30"
+            }
+          },
+          "shippingMethod": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "currency": {
+            "value": "USD",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "USD"
+            }
+          },
+          "subtotal": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "tax": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "freight": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "total": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "specialInstructions": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "lines": [
+            {
+              "lineNo": 1,
+              "customerLineRef": {
+                "value": null,
+                "confidence": 0,
+                "provenance": null
+              },
+              "rawPartNumber": {
+                "value": "THHN-12-BLK-500",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "THHN-12-BLK-500"
+                }
+              },
+              "rawDescription": {
+                "value": "12 AWG THHN black 500ft",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "12 AWG THHN black 500ft"
+                }
+              },
+              "quantity": {
+                "value": 2,
+                "confidence": 0.99,
+                "provenance": {
+                  "page": 1,
+                  "quote": "2"
+                }
+              },
+              "rawUom": {
+                "value": "CS",
+                "confidence": 0.95,
+                "provenance": {
+                  "page": 1,
+                  "quote": "CS"
+                }
+              },
+              "unitPrice": {
+                "value": 358,
+                "confidence": 0.96,
+                "provenance": {
+                  "page": 1,
+                  "quote": "358"
+                }
+              },
+              "extendedPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "requestedDate": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "notes": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              }
+            },
+            {
+              "lineNo": 2,
+              "customerLineRef": {
+                "value": null,
+                "confidence": 0,
+                "provenance": null
+              },
+              "rawPartNumber": {
+                "value": "GFCI-20-WH",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "GFCI-20-WH"
+                }
+              },
+              "rawDescription": {
+                "value": "20A GFCI receptacle white TR",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "20A GFCI receptacle white TR"
+                }
+              },
+              "quantity": {
+                "value": 10,
+                "confidence": 0.99,
+                "provenance": {
+                  "page": 1,
+                  "quote": "10"
+                }
+              },
+              "rawUom": {
+                "value": "EA",
+                "confidence": 0.95,
+                "provenance": {
+                  "page": 1,
+                  "quote": "EA"
+                }
+              },
+              "unitPrice": {
+                "value": 18.9,
+                "confidence": 0.96,
+                "provenance": {
+                  "page": 1,
+                  "quote": "18.9"
+                }
+              },
+              "extendedPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "requestedDate": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "notes": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              }
+            },
+            {
+              "lineNo": 3,
+              "customerLineRef": {
+                "value": null,
+                "confidence": 0,
+                "provenance": null
+              },
+              "rawPartNumber": {
+                "value": "012345678950",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "012345678950"
+                }
+              },
+              "rawDescription": {
+                "value": "4in square box deep",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "4in square box deep"
+                }
+              },
+              "quantity": {
+                "value": 100,
+                "confidence": 0.99,
+                "provenance": {
+                  "page": 1,
+                  "quote": "100"
+                }
+              },
+              "rawUom": {
+                "value": "EA",
+                "confidence": 0.95,
+                "provenance": {
+                  "page": 1,
+                  "quote": "EA"
+                }
+              },
+              "unitPrice": {
+                "value": 2.4,
+                "confidence": 0.96,
+                "provenance": {
+                  "page": 1,
+                  "quote": "2.4"
+                }
+              },
+              "extendedPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "requestedDate": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "notes": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              }
+            }
+          ],
+          "pageRange": {
+            "from": 1,
+            "to": 1
+          }
+        }
+      ],
+      "warnings": []
+    },
+    "model": "synthetic",
+    "promptVersion": "extract-order.v1",
+    "recordedAt": "2026-11-07T00:00:00.000Z",
+    "rerank": {}
+  }
+}

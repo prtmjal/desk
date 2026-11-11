@@ -21,6 +21,12 @@ export type CreateSalesOrderResult = {
   raw?: unknown;
 };
 
+/**
+ * Id convention: everything that crosses this interface is in the ERP's id space.
+ * `sync*` return records whose `id` is the ERP id; `createSalesOrder` receives a draft
+ * whose `customer.customerId` and `lines[].match.best.itemId` are ERP ids (the service
+ * layer translates from its own row ids before calling).
+ */
 export interface ErpConnector {
   readonly type: ConnectorType;
   /** Cheap health probe used by the integrations page and the scheduler. */

@@ -13,3 +13,5 @@ coverage/
 .pglite/
 # eval scratch output
 packages/evals/out/
+# local document store (demo / dev)
+.data/

@@ -1,7 +1,7 @@
 import { boolean, index, integer, jsonb, pgTable, text, uuid } from "drizzle-orm/pg-core";
-import { id, timestamps } from "./common.js";
-import { customers } from "./customers.js";
-import { tenantId } from "./tenants.js";
+import { id, timestamps } from "./common";
+import { customers } from "./customers";
+import { tenantId } from "./tenants";
 
 /** Tenant-wide (customer_id null) or per-customer validation / auto-post rules. */
 export const rules = pgTable(

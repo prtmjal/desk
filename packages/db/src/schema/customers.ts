@@ -1,7 +1,7 @@
 import { boolean, index, jsonb, pgTable, text, unique, uuid } from "drizzle-orm/pg-core";
-import { id, timestamps } from "./common.js";
-import { priceLists } from "./pricing.js";
-import { tenantId } from "./tenants.js";
+import { id, timestamps } from "./common";
+import { priceLists } from "./pricing";
+import { tenantId } from "./tenants";
 
 export const customers = pgTable(
   "customers",

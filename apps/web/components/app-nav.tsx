@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export const APP_NAV = [
-  { href: "/app", label: "Inbox", hint: "Everything that arrived" },
+  { href: "/app", label: "Inbox", hint: "Everything that arrived, and how the desk is doing" },
   { href: "/app/review", label: "Needs review", hint: "Exceptions waiting on a person" },
   { href: "/app/posted", label: "Posted", hint: "In your ERP" },
   { href: "/app/rejected", label: "Rejected", hint: "Not orders, or declined" },
@@ -16,7 +16,7 @@ export const APP_NAV = [
 export function AppNav() {
   const pathname = usePathname();
   return (
-    <nav aria-label="Application" className="flex flex-col gap-0.5">
+    <nav aria-label="Application" className="-mx-1 flex gap-0.5 overflow-x-auto px-1 md:mx-0 md:flex-col md:overflow-visible md:px-0">
       {APP_NAV.map((item) => {
         const active = item.href === "/app" ? pathname === "/app" : pathname.startsWith(item.href);
         return (
@@ -25,7 +25,7 @@ export function AppNav() {
             href={item.href}
             aria-current={active ? "page" : undefined}
             title={item.hint}
-            className={`rounded-md px-3 py-2 text-sm transition-colors ${
+            className={`shrink-0 rounded-md px-3 py-2 text-sm whitespace-nowrap transition-colors ${
               active ? "bg-accent-soft font-medium text-accent-strong" : "text-muted hover:bg-bg-subtle hover:text-fg"
             }`}
           >

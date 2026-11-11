@@ -1,0 +1,721 @@
+{
+  "id": "demo-003-quote-not-order",
+  "kind": "adversarial",
+  "tenant": "demo",
+  "tags": [
+    "classification"
+  ],
+  "input": {
+    "sender": "buyer@acmeelectric.com",
+    "subject": "pricing",
+    "bodyText": "Can you quote 500 ea 3/4 EMT 10' and 20 boxes yellow wing nuts? Need pricing by Friday, not ordering yet.",
+    "attachments": []
+  },
+  "expected": {
+    "extraction": {
+      "documentType": "quote_request",
+      "documentTypeConfidence": 0.97,
+      "language": "en",
+      "orders": [
+        {
+          "poNumber": {
+            "value": null,
+            "confidence": 0.99,
+            "provenance": null
+          },
+          "orderDate": {
+            "value": "2026-11-05",
+            "confidence": 0.97,
+            "provenance": {
+              "page": 1,
+              "quote": "2026-11-05"
+            }
+          },
+          "requestedShipDate": {
+            "value": "2026-11-12",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "2026-11-12"
+            }
+          },
+          "customer": {
+            "name": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "accountNumber": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "contactName": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "email": {
+              "value": "buyer@acmeelectric.com",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "buyer@acmeelectric.com"
+              }
+            },
+            "phone": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            }
+          },
+          "billTo": {
+            "name": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "attention": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "line1": {
+              "value": "100 Industrial Pkwy",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "100 Industrial Pkwy"
+              }
+            },
+            "line2": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "city": {
+              "value": "Dallas",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Dallas"
+              }
+            },
+            "region": {
+              "value": "TX",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "TX"
+              }
+            },
+            "postalCode": {
+              "value": "75201",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "75201"
+              }
+            },
+            "country": {
+              "value": "US",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "US"
+              }
+            }
+          },
+          "shipTo": {
+            "name": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "attention": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "line1": {
+              "value": "100 Industrial Pkwy",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "100 Industrial Pkwy"
+              }
+            },
+            "line2": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "city": {
+              "value": "Dallas",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Dallas"
+              }
+            },
+            "region": {
+              "value": "TX",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "TX"
+              }
+            },
+            "postalCode": {
+              "value": "75201",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "75201"
+              }
+            },
+            "country": {
+              "value": "US",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "US"
+              }
+            }
+          },
+          "paymentTerms": {
+            "value": "Net 30",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "Net 30"
+            }
+          },
+          "shippingMethod": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "currency": {
+            "value": "USD",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "USD"
+            }
+          },
+          "subtotal": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "tax": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "freight": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "total": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "specialInstructions": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "lines": [
+            {
+              "lineNo": 1,
+              "customerLineRef": {
+                "value": null,
+                "confidence": 0,
+                "provenance": null
+              },
+              "rawPartNumber": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "rawDescription": {
+                "value": "3/4 EMT 10'",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "3/4 EMT 10'"
+                }
+              },
+              "quantity": {
+                "value": 500,
+                "confidence": 0.99,
+                "provenance": {
+                  "page": 1,
+                  "quote": "500"
+                }
+              },
+              "rawUom": {
+                "value": "ea",
+                "confidence": 0.95,
+                "provenance": {
+                  "page": 1,
+                  "quote": "ea"
+                }
+              },
+              "unitPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "extendedPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "requestedDate": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "notes": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              }
+            },
+            {
+              "lineNo": 2,
+              "customerLineRef": {
+                "value": null,
+                "confidence": 0,
+                "provenance": null
+              },
+              "rawPartNumber": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "rawDescription": {
+                "value": "yellow wing nuts",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "yellow wing nuts"
+                }
+              },
+              "quantity": {
+                "value": 20,
+                "confidence": 0.99,
+                "provenance": {
+                  "page": 1,
+                  "quote": "20"
+                }
+              },
+              "rawUom": {
+                "value": "boxes",
+                "confidence": 0.95,
+                "provenance": {
+                  "page": 1,
+                  "quote": "boxes"
+                }
+              },
+              "unitPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "extendedPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "requestedDate": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "notes": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              }
+            }
+          ],
+          "pageRange": {
+            "from": 1,
+            "to": 1
+          }
+        }
+      ],
+      "warnings": []
+    },
+    "matches": {
+      "1": "i3",
+      "2": "i4"
+    },
+    "customerId": "c1",
+    "safeToAutoPost": false
+  },
+  "cached": {
+    "extraction": {
+      "documentType": "quote_request",
+      "documentTypeConfidence": 0.97,
+      "language": "en",
+      "orders": [
+        {
+          "poNumber": {
+            "value": null,
+            "confidence": 0.99,
+            "provenance": null
+          },
+          "orderDate": {
+            "value": "2026-11-05",
+            "confidence": 0.97,
+            "provenance": {
+              "page": 1,
+              "quote": "2026-11-05"
+            }
+          },
+          "requestedShipDate": {
+            "value": "2026-11-12",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "2026-11-12"
+            }
+          },
+          "customer": {
+            "name": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "accountNumber": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "contactName": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            },
+            "email": {
+              "value": "buyer@acmeelectric.com",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "buyer@acmeelectric.com"
+              }
+            },
+            "phone": {
+              "value": null,
+              "confidence": 0.9,
+              "provenance": null
+            }
+          },
+          "billTo": {
+            "name": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "attention": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "line1": {
+              "value": "100 Industrial Pkwy",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "100 Industrial Pkwy"
+              }
+            },
+            "line2": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "city": {
+              "value": "Dallas",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Dallas"
+              }
+            },
+            "region": {
+              "value": "TX",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "TX"
+              }
+            },
+            "postalCode": {
+              "value": "75201",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "75201"
+              }
+            },
+            "country": {
+              "value": "US",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "US"
+              }
+            }
+          },
+          "shipTo": {
+            "name": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "attention": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "line1": {
+              "value": "100 Industrial Pkwy",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "100 Industrial Pkwy"
+              }
+            },
+            "line2": {
+              "value": null,
+              "confidence": 0,
+              "provenance": null
+            },
+            "city": {
+              "value": "Dallas",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "Dallas"
+              }
+            },
+            "region": {
+              "value": "TX",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "TX"
+              }
+            },
+            "postalCode": {
+              "value": "75201",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "75201"
+              }
+            },
+            "country": {
+              "value": "US",
+              "confidence": 0.95,
+              "provenance": {
+                "page": 1,
+                "quote": "US"
+              }
+            }
+          },
+          "paymentTerms": {
+            "value": "Net 30",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "Net 30"
+            }
+          },
+          "shippingMethod": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "currency": {
+            "value": "USD",
+            "confidence": 0.9,
+            "provenance": {
+              "page": 1,
+              "quote": "USD"
+            }
+          },
+          "subtotal": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "tax": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "freight": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "total": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "specialInstructions": {
+            "value": null,
+            "confidence": 0.9,
+            "provenance": null
+          },
+          "lines": [
+            {
+              "lineNo": 1,
+              "customerLineRef": {
+                "value": null,
+                "confidence": 0,
+                "provenance": null
+              },
+              "rawPartNumber": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "rawDescription": {
+                "value": "3/4 EMT 10'",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "3/4 EMT 10'"
+                }
+              },
+              "quantity": {
+                "value": 500,
+                "confidence": 0.99,
+                "provenance": {
+                  "page": 1,
+                  "quote": "500"
+                }
+              },
+              "rawUom": {
+                "value": "ea",
+                "confidence": 0.95,
+                "provenance": {
+                  "page": 1,
+                  "quote": "ea"
+                }
+              },
+              "unitPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "extendedPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "requestedDate": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "notes": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              }
+            },
+            {
+              "lineNo": 2,
+              "customerLineRef": {
+                "value": null,
+                "confidence": 0,
+                "provenance": null
+              },
+              "rawPartNumber": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "rawDescription": {
+                "value": "yellow wing nuts",
+                "confidence": 0.97,
+                "provenance": {
+                  "page": 1,
+                  "quote": "yellow wing nuts"
+                }
+              },
+              "quantity": {
+                "value": 20,
+                "confidence": 0.99,
+                "provenance": {
+                  "page": 1,
+                  "quote": "20"
+                }
+              },
+              "rawUom": {
+                "value": "boxes",
+                "confidence": 0.95,
+                "provenance": {
+                  "page": 1,
+                  "quote": "boxes"
+                }
+              },
+              "unitPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "extendedPrice": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "requestedDate": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              },
+              "notes": {
+                "value": null,
+                "confidence": 0.9,
+                "provenance": null
+              }
+            }
+          ],
+          "pageRange": {
+            "from": 1,
+            "to": 1
+          }
+        }
+      ],
+      "warnings": []
+    },
+    "model": "synthetic",
+    "promptVersion": "extract-order.v1",
+    "recordedAt": "2026-11-07T00:00:00.000Z",
+    "rerank": {
+      "1": {
+        "itemId": "i3",
+        "confidence": 0.93,
+        "reason": "3/4 EMT in 10 ft lengths is EMT-075-10"
+      },
+      "2": {
+        "itemId": "i4",
+        "confidence": 0.9,
+        "reason": "Yellow wing connectors; 'wing nuts' is trade slang for them"
+      }
+    }
+  }
+}

@@ -12,8 +12,8 @@ import {
   type DraftLine,
   type OrderHeader,
   type CustomerMatch,
-} from "../src/index.js";
-import { ITEMS, line, str, num } from "./fixtures.js";
+} from "../src/index";
+import { ITEMS, line, str, num } from "./fixtures";
 
 const catalog = new InMemoryCatalog(ITEMS);
 const ctx: ValidationContext = {

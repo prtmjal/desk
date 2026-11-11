@@ -7,9 +7,9 @@
 import { normalizeDescription, normalizePartNumber } from "@desk/core";
 import { eq } from "drizzle-orm";
 import { pathToFileURL } from "node:url";
-import { withItemKeys } from "./catalog.js";
-import { createDb, withTenant, type Db } from "./client.js";
-import { aliases, customers, items, tenantSettings, tenants } from "./schema/index.js";
+import { withItemKeys } from "./catalog";
+import { createDb, withTenant, type Db } from "./client";
+import { aliases, customers, items, tenantSettings, tenants } from "./schema/index";
 
 export const DEMO_TENANT_ID = "00000000-0000-4000-8000-000000000001";
 export const DEMO_TENANT_SLUG = "acme-supply-demo";

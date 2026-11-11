@@ -1,9 +1,9 @@
 import { index, integer, numeric, pgTable, text, unique, uuid } from "drizzle-orm/pg-core";
-import { id, timestamps } from "./common.js";
-import { customers } from "./customers.js";
-import { items } from "./items.js";
-import { orderLines } from "./orders.js";
-import { tenantId } from "./tenants.js";
+import { id, timestamps } from "./common";
+import { customers } from "./customers";
+import { items } from "./items";
+import { orderLines } from "./orders";
+import { tenantId } from "./tenants";
 
 /**
  * Learned per-customer part-number / description aliases (plan §4.5 moat #1, L1 in §6.6).

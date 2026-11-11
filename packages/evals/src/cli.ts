@@ -1,7 +1,7 @@
 import { parseArgs } from "node:util";
 import { execSync } from "node:child_process";
 import { loadPrompt } from "@desk/extract";
-import { appendToEvalsDoc, formatMarkdown, runEvals } from "./runner.js";
+import { appendToEvalsDoc, formatMarkdown, runEvals } from "./runner";
 
 /**
  * pnpm evals [--set demo] [--live] [--record] [--filter x] [--budget 0.15] [--write] [--verbose]

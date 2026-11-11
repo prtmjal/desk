@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import type { CatalogItem, CustomerRecord, OrderDraft } from "@desk/core";
-import type { CreateSalesOrderResult, ErpConnector, PriceListEntry, StockLevel } from "./connector.js";
+import type { CreateSalesOrderResult, ErpConnector, PriceListEntry, StockLevel } from "./connector";
 
 /**
  * Universal export connector (plan §6.2, §6.5): item/customer masters come from CSV

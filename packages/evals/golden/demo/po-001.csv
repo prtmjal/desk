@@ -1,0 +1,7 @@
+PO Number,PO-4471,,,
+Date,2026-11-05,,,
+Ship to,Acme Electric Contractors,100 Industrial Pkwy,Dallas TX 75201,
+Line,Part,Description,Qty,UoM,Price
+1,THHN-12-BLK-500,12 AWG THHN black 500ft,2,CS,358.00
+2,GFCI-20-WH,20A GFCI receptacle white TR,10,EA,18.90
+3,012345678950,4in square box deep,100,EA,2.40

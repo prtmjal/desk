@@ -1,6 +1,6 @@
 import { index, integer, numeric, pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
-import { id, timestamps } from "./common.js";
-import { tenantId } from "./tenants.js";
+import { id, timestamps } from "./common";
+import { tenantId } from "./tenants";
 
 /** Monthly usage, the basis for the per-order meter in Stripe (plan §8). */
 export const usageMeters = pgTable(

@@ -9,7 +9,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { fixtures } from "@desk/extract";
-import type { GoldenCase } from "../src/golden.js";
+import type { GoldenCase } from "../src/golden";
 
 const { DEMO_ITEMS, DEMO_CUSTOMERS, extractedLine, extractedOrder, extraction } = fixtures;
 const out = resolve(dirname(fileURLToPath(import.meta.url)), "..", "golden", "demo");
@@ -50,7 +50,7 @@ const case1: GoldenCase = {
   tags: ["exact", "multi-line"],
   input: { sender: "purchasing@acmeelectric.com", subject: "PO 4471", bodyText: null, attachments: ["po-001.csv"] },
   expected: { extraction: ex1, matches: { "1": "i1", "2": "i8", "3": "i6" }, customerId: "c1", safeToAutoPost: true },
-  cached: { extraction: ex1, ...recorded },
+  cached: { extraction: ex1, ...recorded, rerank: {} },
 };
 
 // Case 2: email body only, description-only lines, one ambiguous (colour missing) → must abstain.
@@ -73,7 +73,7 @@ const case2: GoldenCase = {
   tags: ["abstain", "no-po-number"],
   input: { sender: "pat@brightlights.com", subject: "order", bodyText: body2, attachments: [] },
   expected: { extraction: ex2, matches: { "1": null, "2": "i2" }, customerId: "c2", safeToAutoPost: false },
-  cached: { extraction: ex2, ...recorded },
+  cached: { extraction: ex2, ...recorded, rerank: {} },
 };
 
 // Case 3: adversarial — a quote request that looks like an order; must not become an order.
@@ -96,7 +96,15 @@ const case3: GoldenCase = {
   tags: ["classification"],
   input: { sender: "buyer@acmeelectric.com", subject: "pricing", bodyText: body3, attachments: [] },
   expected: { extraction: ex3, matches: { "1": "i3", "2": "i4" }, customerId: "c1", safeToAutoPost: false },
-  cached: { extraction: ex3, ...recorded },
+  // Description-only lines sit below the L2 accept threshold on purpose; the recorded L4 answers resolve them.
+  cached: {
+    extraction: ex3,
+    ...recorded,
+    rerank: {
+      "1": { itemId: "i3", confidence: 0.93, reason: "3/4 EMT in 10 ft lengths is EMT-075-10" },
+      "2": { itemId: "i4", confidence: 0.9, reason: "Yellow wing connectors; 'wing nuts' is trade slang for them" },
+    },
+  },
 };
 
 // Case 4: pack rounding + duplicate-looking PO + price mismatch (needs review, never auto-post).
@@ -116,7 +124,7 @@ const case4: GoldenCase = {
   tags: ["price-mismatch", "pack-rounding"],
   input: { sender: "purchasing@acmeelectric.com", subject: "Revised PO 4471", bodyText: "Revised PO attached, price per our contract.", attachments: ["po-004.csv"] },
   expected: { extraction: ex4, matches: { "1": "i3", "2": "i5" }, customerId: "c1", safeToAutoPost: false },
-  cached: { extraction: ex4, ...recorded },
+  cached: { extraction: ex4, ...recorded, rerank: {} },
 };
 
 for (const c of [case1, case2, case3, case4]) {

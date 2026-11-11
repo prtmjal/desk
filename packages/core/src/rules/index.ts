@@ -1,2 +1,2 @@
-export * from "./validate.js";
-export * from "./autopost.js";
+export * from "./validate";
+export * from "./autopost";

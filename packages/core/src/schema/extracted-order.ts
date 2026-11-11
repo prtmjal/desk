@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Confidence, DateField, NumberField, StringField } from "./common.js";
+import { Confidence, DateField, NumberField, StringField } from "./common";
 
 /**
  * The contract between the LLM extractor and everything downstream.

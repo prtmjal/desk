@@ -12,6 +12,20 @@ export const SITE = {
   auditCta: "Run 50 of your POs free",
 } as const;
 
+/**
+ * Who the customer contracts with. Set these before launch: the legal pages, Stripe and
+ * Intuit's app review all show them. Unset values render as a visible "[set …]" marker.
+ */
+export function legal() {
+  return {
+    entity: process.env.LEGAL_ENTITY_NAME || "[set LEGAL_ENTITY_NAME]",
+    address: process.env.LEGAL_ENTITY_ADDRESS || "[set LEGAL_ENTITY_ADDRESS]",
+    email: process.env.LEGAL_CONTACT_EMAIL || "[set LEGAL_CONTACT_EMAIL]",
+    jurisdiction: process.env.LEGAL_JURISDICTION || "[set LEGAL_JURISDICTION]",
+    effective: process.env.LEGAL_EFFECTIVE_DATE || "[set LEGAL_EFFECTIVE_DATE]",
+  };
+}
+
 export const ERPS = [
   "QuickBooks Online",
   "QuickBooks Desktop / Enterprise",

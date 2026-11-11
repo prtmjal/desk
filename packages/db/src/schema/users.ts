@@ -1,6 +1,6 @@
 import { index, pgEnum, pgTable, text, unique, uuid } from "drizzle-orm/pg-core";
-import { id, timestamps } from "./common.js";
-import { tenantId } from "./tenants.js";
+import { id, timestamps } from "./common";
+import { tenantId } from "./tenants";
 
 /** Global (not tenant-scoped): a person may belong to several tenants. No RLS. */
 export const users = pgTable("users", {

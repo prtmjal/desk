@@ -38,6 +38,13 @@ export const GoldenCase = z.object({
       model: z.string(),
       promptVersion: z.string(),
       recordedAt: z.string(),
+      /**
+       * Recorded L4 re-rank answers keyed by lineNo, so offline runs replay the model's
+       * disambiguation instead of silently skipping layer 4. Absent = the re-ranker declines.
+       */
+      rerank: z
+        .record(z.string(), z.object({ itemId: z.string().nullable(), confidence: z.number(), reason: z.string() }))
+        .default({}),
     })
     .nullable()
     .default(null),

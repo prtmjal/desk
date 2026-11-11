@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { identifyCustomer, domainOf, type ExtractedOrder } from "../src/index.js";
-import { CUSTOMERS, str } from "./fixtures.js";
+import { identifyCustomer, domainOf, type ExtractedOrder } from "../src/index";
+import { CUSTOMERS, str } from "./fixtures";
 
 function order(partial: { name?: string | null; account?: string | null; email?: string | null; billToName?: string | null }): Pick<ExtractedOrder, "customer" | "billTo" | "shipTo"> {
   const addr = (name: string | null) => ({

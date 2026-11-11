@@ -1,6 +1,7 @@
 import type { OrderDraft } from "@desk/core";
 import { sql } from "drizzle-orm";
 import {
+  boolean,
   date,
   index,
   integer,
@@ -14,12 +15,12 @@ import {
   uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
-import { id, timestamps } from "./common.js";
-import { customers, shipTos } from "./customers.js";
-import { documents, inboundMessages } from "./inbound.js";
-import { items } from "./items.js";
-import { tenantId } from "./tenants.js";
-import { users } from "./users.js";
+import { id, timestamps } from "./common";
+import { customers, shipTos } from "./customers";
+import { documents, inboundMessages } from "./inbound";
+import { items } from "./items";
+import { tenantId } from "./tenants";
+import { users } from "./users";
 
 export const orderStatus = pgEnum("order_status", ["new", "needs_review", "confirmed", "posted", "rejected"]);
 
@@ -46,6 +47,20 @@ export const orders = pgTable(
     /** The full OrderDraft (plan §7.3 #1): the contract between extraction, matching, UI and connectors. */
     draft: jsonb("draft").$type<OrderDraft>(),
     erpOrderId: text("erp_order_id"),
+    erpOrderNumber: text("erp_order_number"),
+    erpUrl: text("erp_url"),
+    /** Posted by the rules engine with no human action. */
+    autoPosted: boolean("auto_posted").notNull().default(false),
+    /** Posted without any human edit (the touchless metric, plan §6.4). */
+    touchless: boolean("touchless").notNull().default(false),
+    /** Shadow mode: the rules engine would have posted this order. */
+    shadowEligible: boolean("shadow_eligible").notNull().default(false),
+    /** Number of human edits applied in review. */
+    editCount: integer("edit_count").notNull().default(0),
+    rejectReason: text("reject_reason"),
+    /** Last ERP posting error; cleared on success. */
+    postError: text("post_error"),
+    acknowledgedAt: timestamp("acknowledged_at", { withTimezone: true }),
     postedAt: timestamp("posted_at", { withTimezone: true }),
     reviewedBy: uuid("reviewed_by").references(() => users.id, { onDelete: "set null" }),
     reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
@@ -58,7 +73,9 @@ export const orders = pgTable(
     // Duplicate-PO detection: one live order per (tenant, customer, PO). Rejected orders don't block a resubmission.
     uniqueIndex("orders_tenant_customer_po_uq")
       .on(t.tenantId, t.customerId, t.poNumber)
-      .where(sql`${t.status} <> 'rejected' AND ${t.poNumber} IS NOT NULL AND ${t.customerId} IS NOT NULL`),
+      // Only confirmed/posted orders hold the PO number: a duplicate may sit in review
+      // (flagged DUPLICATE_PO) but can never be confirmed twice (plan §6.4, no duplicate posts).
+      .where(sql`${t.status} IN ('confirmed', 'posted') AND ${t.poNumber} IS NOT NULL AND ${t.customerId} IS NOT NULL`),
   ],
 );
 

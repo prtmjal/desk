@@ -3,8 +3,8 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { InMemoryCatalog, type CatalogItem, type CustomerRecord } from "@desk/core";
 import { AnthropicLlm, FakeLlm, fixtures, normalizeInput, processDocument, type LlmClient, type NormalizedDocument } from "@desk/extract";
-import { GoldenCase } from "./golden.js";
-import { aggregate, scoreCase, type Aggregate, type CaseScore } from "./scorer.js";
+import { GoldenCase } from "./golden";
+import { aggregate, scoreCase, type Aggregate, type CaseScore } from "./scorer";
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const GOLDEN_ROOT = resolve(here, "..", "golden");
@@ -60,7 +60,12 @@ export async function runEvals(opts: RunOptions): Promise<RunResult> {
         scores.push(emptyScore(c.data, "no cached extraction; run with --live --record"));
         continue;
       }
-      llm = new FakeLlm({ extraction: c.data.cached.extraction, usdPerCall: 0 });
+      const recorded = c.data.cached.rerank ?? {};
+      llm = new FakeLlm({
+        extraction: c.data.cached.extraction,
+        usdPerCall: 0,
+        rerank: (input) => recorded[String(input.line.lineNo)] ?? { itemId: null, confidence: 0, reason: "no recorded re-rank for this line" },
+      });
     } else {
       llm = new AnthropicLlm();
     }
@@ -76,7 +81,8 @@ export async function runEvals(opts: RunOptions): Promise<RunResult> {
         customers,
         validation: fixtures.validationFromCatalog(catalog, customers),
         skipClassify: true,
-        useReranker: opts.mode === "live",
+        // Cached runs replay recorded L4 answers (GoldenCase.cached.rerank); live runs call the model.
+        useReranker: true,
       });
     } catch (err) {
       scores.push(emptyScore(c.data, `pipeline error: ${err instanceof Error ? err.message : String(err)}`));
@@ -87,7 +93,18 @@ export async function runEvals(opts: RunOptions): Promise<RunResult> {
     if (opts.mode === "live" && opts.record && result.extraction) {
       const updated: GoldenCase = {
         ...c.data,
-        cached: { extraction: result.extraction, model: result.drafts[0]?.meta.model ?? "unknown", promptVersion: result.drafts[0]?.meta.promptVersion ?? "unknown", recordedAt: new Date().toISOString() },
+        cached: {
+          extraction: result.extraction,
+          model: result.drafts[0]?.meta.model ?? "unknown",
+          promptVersion: result.drafts[0]?.meta.promptVersion ?? "unknown",
+          recordedAt: new Date().toISOString(),
+          rerank: Object.fromEntries(
+            result.drafts
+              .flatMap((d) => d.lines)
+              .filter((l) => l.match.best?.method === "L4_llm")
+              .map((l) => [String(l.lineNo), { itemId: l.match.best!.itemId, confidence: l.match.best!.score, reason: l.match.best!.evidence }]),
+          ),
+        },
       };
       await writeFile(c.file, JSON.stringify(updated, null, 2) + "\n", "utf8");
     }

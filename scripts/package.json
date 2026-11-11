@@ -9,16 +9,20 @@
     "import-items": "tsx src/import-items.ts",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests",
+    "stripe-setup": "tsx src/stripe-setup.ts",
+    "preflight": "tsx src/doctor.ts"
   },
   "dependencies": {
     "@desk/core": "workspace:^",
     "@desk/db": "workspace:^",
     "@desk/erp": "workspace:^",
     "@desk/evals": "workspace:^",
-    "@desk/extract": "workspace:^"
+    "@desk/extract": "workspace:^",
+    "pg": "^8.23.1"
   },
   "devDependencies": {
-    "tsx": "^4.23.15"
+    "tsx": "^4.23.15",
+    "@types/pg": "^8.23.1"
   }
 }

@@ -8,7 +8,8 @@ const UOM_SYNONYMS: Record<string, string> = {
   CT: "CT", CTN: "CT", CARTON: "CT", CARTONS: "CT",
   DZ: "DZ", DOZ: "DZ", DOZEN: "DZ",
   PR: "PR", PAIR: "PR", PAIRS: "PR",
-  RL: "RL", ROLL: "RL", ROLLS: "RL",
+  RL: "RL", ROLL: "RL", ROLLS: "RL", COIL: "RL", SPOOL: "RL",
+  BDL: "BDL", BD: "BDL", BNDL: "BDL", BUNDLE: "BDL", BUNDLES: "BDL",
   BG: "BG", BAG: "BG", BAGS: "BG",
   PL: "PL", PLT: "PL", PALLET: "PL", PALLETS: "PL", SKID: "PL",
   FT: "FT", FOOT: "FT", FEET: "FT", LF: "FT",
@@ -50,19 +51,24 @@ export type UomResolution =
  * Resolve the ordered UoM against the item's pack definition.
  * - Same as base: factor 1.
  * - Known selling unit: factor from table.
- * - Unknown: fail so the line is flagged (UOM_UNKNOWN), never guessed.
+ * - Absent: base UoM.
+ * - Anything else, including units this module has never seen: fail so the line is
+ *   flagged (UOM_UNKNOWN), never guessed.
  */
 export function resolveUom(rawUom: string | null | undefined, pack: PackDefinition): UomResolution {
-  const base = normalizeUom(pack.baseUom) ?? pack.baseUom.toUpperCase();
-  const ordered = normalizeUom(rawUom);
-  if (!ordered) {
-    // Absent UoM on the PO: assume base UoM but say so.
-    return { ok: true, factor: 1, erpUom: base, note: rawUom ? `Unknown UoM '${rawUom}' assumed ${base}` : null };
-  }
+  const canon = (u: string) => normalizeUom(u) ?? u.toUpperCase().replace(/[^A-Z0-9]/g, "");
+  const base = canon(pack.baseUom);
+  const written = rawUom?.trim();
+  // Absent UoM on the PO: the base unit is the only reasonable reading.
+  if (!written) return { ok: true, factor: 1, erpUom: base, note: null };
+  const ordered = canon(written);
   if (ordered === base) return { ok: true, factor: 1, erpUom: base, note: null };
-  const f = pack.factors?.[ordered];
-  if (f && f > 0) return { ok: true, factor: f, erpUom: base, note: `${ordered} = ${f} ${base}` };
-  return { ok: false, reason: `UoM '${rawUom}' not defined for item (base ${base})` };
+  // Pack factors are keyed however the ERP spells the unit; compare canonical forms.
+  for (const [unit, f] of Object.entries(pack.factors ?? {})) {
+    if (canon(unit) === ordered && f > 0) return { ok: true, factor: f, erpUom: base, note: `${ordered} = ${f} ${base}` };
+  }
+  // A unit we cannot place is never guessed: "10 BDL" read as 10 EA ships a tenth of the order.
+  return { ok: false, reason: `UoM '${written}' not defined for item (base ${base})` };
 }
 
 export type PackRounding = { qty: number; rounded: boolean; note: string | null };

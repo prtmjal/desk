@@ -1,4 +1,4 @@
-import type { CatalogItem, CustomerRecord, ExtractedLine, StringField, NumberField } from "../src/index.js";
+import type { CatalogItem, CustomerRecord, ExtractedLine, StringField, NumberField } from "../src/index";
 
 export const str = (value: string | null, confidence = 0.98): StringField => ({ value, confidence, provenance: null });
 export const num = (value: number | null, confidence = 0.98): NumberField => ({ value, confidence, provenance: null });

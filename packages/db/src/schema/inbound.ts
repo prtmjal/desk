@@ -1,6 +1,6 @@
 import { index, integer, pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
-import { id, timestamps } from "./common.js";
-import { tenantId } from "./tenants.js";
+import { id, timestamps } from "./common";
+import { tenantId } from "./tenants";
 
 /**
  * One row per inbound email (or upload session). (tenant_id, message_id) is the
@@ -23,6 +23,12 @@ export const inboundMessages = pgTable(
     classification: text("classification"),
     /** received | processing | processed | ignored | failed */
     status: text("status").notNull().default("received"),
+    /** email | upload */
+    source: text("source").notNull().default("email"),
+    /** Why processing failed or the message was ignored. */
+    error: text("error"),
+    /** Model cost for this message in USD (plan §6.4 cost budget). */
+    costUsd: text("cost_usd"),
     ...timestamps(),
   },
   (t) => [

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { fixtures } from "@desk/extract";
-import { aggregate, alignLines, scoreCase, valuesEqual, evaluateGate, buildProspectReport, runEvals } from "../src/index.js";
+import { aggregate, alignLines, scoreCase, valuesEqual, evaluateGate, buildProspectReport, runEvals } from "../src/index";
 
 const { extractedLine, extractedOrder, extraction } = fixtures;
 

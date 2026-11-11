@@ -1,9 +1,9 @@
 import { normalizeDescription, normalizePartNumber, partNumberVariants, type CatalogIndex } from "@desk/core";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { PgCatalogIndex } from "../src/catalog.js";
-import { withTenant } from "../src/client.js";
-import { DEMO_ITEMS, seedDemo, type SeedResult } from "../src/seed.js";
-import { createTestDb, type TestContext } from "./pglite.js";
+import { PgCatalogIndex } from "../src/catalog";
+import { withTenant } from "../src/client";
+import { DEMO_ITEMS, seedDemo, type SeedResult } from "../src/seed";
+import { createTestDb, type TestContext } from "./pglite";
 
 let ctx: TestContext;
 let seed: SeedResult;

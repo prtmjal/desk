@@ -1,5 +1,5 @@
 import { integer, pgTable, text } from "drizzle-orm/pg-core";
-import { createdAt, id } from "./common.js";
+import { createdAt, id } from "./common";
 
 /** Marketing-site waitlist. Not tenant scoped, no RLS (written by the public site). */
 export const waitlist = pgTable("waitlist", {

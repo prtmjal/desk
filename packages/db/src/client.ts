@@ -11,7 +11,7 @@ import { sql } from "drizzle-orm";
 import { drizzle, type NodePgDatabase } from "drizzle-orm/node-postgres";
 import type { PgDatabase, PgQueryResultHKT, PgTransaction } from "drizzle-orm/pg-core";
 import pg from "pg";
-import * as schema from "./schema/index.js";
+import * as schema from "./schema/index";
 
 export type Schema = typeof schema;
 

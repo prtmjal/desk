@@ -4,10 +4,12 @@
  * Rule: every query against a tenant-scoped table runs inside `withTenant`.
  * See README.md for the RLS model.
  */
-export * from "./schema/index.js";
-export { createDb, withTenant, assertTenantId, schema } from "./client.js";
-export type { Db, Tx, DbOrTx, DeskDb, Schema, CreateDbOptions } from "./client.js";
-export { PgCatalogIndex, withItemKeys, toCatalogItem, toAlias } from "./catalog.js";
-export { MIGRATIONS_FOLDER, runMigrations } from "./migrate.js";
-export { seedDemo, DEMO_TENANT_ID, DEMO_ITEMS, DEMO_CUSTOMERS } from "./seed.js";
-export type { SeedResult } from "./seed.js";
+export * from "./schema/index";
+export { createDb, withTenant, assertTenantId, schema } from "./client";
+export type { Db, Tx, DbOrTx, DeskDb, Schema, CreateDbOptions } from "./client";
+export { PgCatalogIndex, withItemKeys, toCatalogItem, toAlias } from "./catalog";
+export { MIGRATIONS_FOLDER, runMigrations } from "./migrate";
+export { seedDemo, DEMO_TENANT_ID, DEMO_ITEMS, DEMO_CUSTOMERS } from "./seed";
+export type { SeedResult } from "./seed";
+export { createPgliteDb } from "./pglite";
+export type { PgliteDb, PgliteContext } from "./pglite";

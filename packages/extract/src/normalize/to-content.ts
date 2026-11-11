@@ -1,5 +1,5 @@
 import type Anthropic from "@anthropic-ai/sdk";
-import type { NormalizedDocument } from "./types.js";
+import type { NormalizedDocument } from "./types";
 
 /**
  * Turn a normalized document into Messages API content blocks. Native PDF and image

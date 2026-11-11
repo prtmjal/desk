@@ -1,6 +1,6 @@
-import type { CustomerMatch, ExtractedOrder } from "../schema/index.js";
-import { normalizePartNumber } from "../matching/normalize.js";
-import { similarity } from "../matching/trigram.js";
+import type { CustomerMatch, ExtractedOrder } from "../schema/index";
+import { normalizePartNumber } from "../matching/normalize";
+import { similarity } from "../matching/trigram";
 
 export type CustomerRecord = {
   id: string;
@@ -25,6 +25,11 @@ const FREE_MAIL = new Set([
   "gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "aol.com", "icloud.com", "live.com", "msn.com",
   "comcast.net", "att.net", "proton.me", "protonmail.com",
 ]);
+
+/** Free-mail providers never identify a company. */
+export function isFreeMailDomain(domain: string | null | undefined): boolean {
+  return !!domain && FREE_MAIL.has(domain.toLowerCase());
+}
 
 export function domainOf(email: string | null | undefined): string | null {
   if (!email) return null;
