@@ -14,7 +14,7 @@ import {
   type Mailer,
   type ServiceDeps,
 } from "@desk/service";
-import { appUrl, inboundDomain, isAnthropicConfigured, isDatabaseConfigured, isDemoMode, isPostmarkConfigured, isQuickBooksConfigured } from "@/lib/env";
+import { appUrl, inboundDomain, isAnthropicConfigured, isDatabaseConfigured, isDemoMode, isPostmarkConfigured, isQuickBooksConfigured, isStripeConfigured } from "@/lib/env";
 import { stripeUsageReporter } from "./billing";
 
 /**
@@ -87,6 +87,8 @@ async function build(): Promise<ServiceDeps> {
       },
     }),
     usage: stripeUsageReporter(db),
+    // The paywall only exists when there is a way to pay.
+    billing: { enforce: isStripeConfigured(), trialPostedLimit: Math.max(0, Number(process.env.TRIAL_POSTED_ORDER_LIMIT ?? 25)) },
     appUrl: appUrl(),
     inboundDomain: inboundDomain(),
     secretsKey,

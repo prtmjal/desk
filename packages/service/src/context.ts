@@ -25,6 +25,8 @@ export type ServiceDeps = {
   /** Build a live connector for a tenant's integration row, or null when it cannot post. */
   connectorFor(tenantId: string, integration: IntegrationRow): Promise<ErpConnector | null>;
   usage?: UsageReporter | null;
+  /** Plan enforcement (src/entitlements.ts). Absent = nothing is gated. */
+  billing?: import("./entitlements").BillingPolicy | null;
   now?: () => Date;
   appUrl: string;
   /** Domain of per-tenant intake addresses, e.g. orders.example.com */

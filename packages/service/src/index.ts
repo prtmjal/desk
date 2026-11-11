@@ -21,3 +21,4 @@ export * from "./secrets";
 export * from "./tenants";
 export * from "./validation";
 export * from "./queries";
+export * from "./entitlements";

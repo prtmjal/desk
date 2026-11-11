@@ -18,7 +18,9 @@
     "db:generate": "pnpm --filter @desk/db run generate",
     "db:migrate": "pnpm --filter @desk/db run migrate",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
-    "demo": "DESK_DEMO=1 pnpm --filter @desk/web dev"
+    "demo": "DESK_DEMO=1 pnpm --filter @desk/web dev",
+    "stripe:setup": "pnpm --filter @desk/scripts run stripe-setup",
+    "preflight": "pnpm --filter @desk/scripts run preflight"
   },
   "devDependencies": {
     "@types/node": "^22.15.0",

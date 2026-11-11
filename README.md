@@ -7,6 +7,7 @@ correction is remembered for that customer.
 
 - Plan: [docs/MASTER_PLAN.md](docs/MASTER_PLAN.md)
 - Where the build stands: [docs/STATUS.md](docs/STATUS.md)
+- **Launch checklist: [docs/runbooks/LAUNCH.md](docs/runbooks/LAUNCH.md)**
 - Setup, service by service: [docs/runbooks/SETUP.md](docs/runbooks/SETUP.md)
 - Decisions: [docs/DECISIONS.md](docs/DECISIONS.md) · Eval results: [docs/EVALS.md](docs/EVALS.md)
 
@@ -41,6 +42,6 @@ PO# HP-4471
 
 ## Commands
 
-`pnpm dev` · `pnpm demo` · `pnpm test` · `pnpm evals` · `pnpm typecheck` · `pnpm lint` · `pnpm db:migrate` · `pnpm replay`
+`pnpm dev` · `pnpm demo` · `pnpm test` · `pnpm evals` · `pnpm typecheck` · `pnpm lint` · `pnpm db:migrate` · `pnpm replay` · `pnpm preflight` · `pnpm stripe:setup`
 
 Requires Node 22 and pnpm 10.

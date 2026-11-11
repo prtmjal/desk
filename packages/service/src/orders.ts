@@ -24,6 +24,7 @@ import { and, desc, eq, ilike, inArray, or, sql } from "drizzle-orm";
 import { logEvent, SYSTEM, type Actor } from "./audit";
 import { itemErpIds } from "./catalog-sync";
 import { errorText, nowOf, ServiceError, type ServiceDeps } from "./context";
+import { postingAllowance } from "./entitlements";
 import { learnFromOrder } from "./learn";
 import { sendAcknowledgment } from "./notify";
 import { ScopedCatalog, scopeIn, type Run } from "./scope";
@@ -420,6 +421,8 @@ export async function confirmOrder(deps: ServiceDeps, tenantId: string, orderId:
   };
   if (settings.shadowMode) return stop("Shadow mode is on: nothing is posted to the ERP", true);
   if (!integration) return stop("No ERP is connected. Connect one in Settings, then post this order.", false);
+  const allowance = await postingAllowance(deps, tenantId);
+  if (!allowance.allowed) return stop(allowance.reason ?? "Posting is not available on this plan.", false);
   const connector = await deps.connectorFor(tenantId, integration);
   if (!connector) return stop(`The ${integration.type} connection needs attention before orders can post.`, false);
 

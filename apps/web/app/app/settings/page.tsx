@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTenant, listIntegrations } from "@desk/service";
+import { getTenant, listIntegrations, postingAllowance } from "@desk/service";
 import Link from "next/link";
 import { connectSimpleAction, disconnectAction, openBillingPortalAction, saveAckAction, saveRulesAction, sendDigestNowAction, setOrderEntityAction, startCheckoutAction, syncNowAction } from "../actions";
 import { ActionForm, Check } from "@/components/app/forms";
@@ -18,7 +18,7 @@ const TYPE_LABEL: Record<string, string> = { quickbooks_online: "QuickBooks Onli
 export default async function SettingsPage({ searchParams }: { searchParams: Promise<{ error?: string; connected?: string; billing?: string }> }) {
   const s = await requireSession();
   const sp = await searchParams;
-  const [tenant, integrations, billing] = await Promise.all([getTenant(s.deps, s.tenantId), listIntegrations(s.deps, s.tenantId), billingSummary(s.deps, s.tenantId)]);
+  const [tenant, integrations, billing, allowance] = await Promise.all([getTenant(s.deps, s.tenantId), listIntegrations(s.deps, s.tenantId), billingSummary(s.deps, s.tenantId), postingAllowance(s.deps, s.tenantId)]);
   const admin = canAdmin(s);
   const st = tenant.settings;
   const active = integrations.find((i) => i.status === "connected") ?? integrations.find((i) => i.status === "error") ?? null;
@@ -174,6 +174,8 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
             Current plan: <span className="font-medium capitalize">{tenant.plan}</span>
             {billing.subscription ? <span className="text-muted"> · {billing.subscription.status}{billing.subscription.currentPeriodEnd ? ` · renews ${when(billing.subscription.currentPeriodEnd)}` : ""}</span> : null}
           </p>
+          {allowance.trialRemaining !== null ? <p className="mt-1 text-sm">The trial includes posting to your ERP for a limited number of orders: {allowance.trialRemaining} left. Reading, matching and review are not limited.</p> : null}
+          {!allowance.allowed ? <p role="alert" className="mt-1 text-sm text-danger">{allowance.reason}</p> : null}
           <p className="mt-1 text-sm text-muted">You are billed only for orders that reach your ERP, never for rejected or unreadable documents.</p>
           {isStripeConfigured() ? (
             admin ? (

@@ -9,7 +9,7 @@
 import { createHash } from "node:crypto";
 import { documents, inboundMessages, orders, rules, tenantSettings, withTenant } from "@desk/db";
 import { normalizeInput, processDocument, type RawAttachment } from "@desk/extract";
-import { and, desc, eq, inArray } from "drizzle-orm";
+import { and, desc, eq, inArray, lt } from "drizzle-orm";
 import { logEvent, SYSTEM, type Actor } from "./audit";
 import { joinKey, safeFilename } from "./blobs";
 import { errorText, nowOf, ServiceError, type ServiceDeps } from "./context";
@@ -235,4 +235,22 @@ export async function listMessages(deps: Pick<ServiceDeps, "db">, tenantId: stri
       .orderBy(desc(inboundMessages.receivedAt))
       .limit(opts.limit ?? 50),
   );
+}
+
+/**
+ * Messages left in `received` or `processing` longer than `olderThanMs` were interrupted
+ * (a deploy, a crash, a lost job). Put them back to `received` and return their ids so the
+ * caller can dispatch them again; `processMessage` is idempotent.
+ */
+export async function requeueStuckMessages(deps: Pick<ServiceDeps, "db" | "now">, tenantId: string, olderThanMs = 15 * 60_000): Promise<string[]> {
+  const cutoff = new Date(nowOf(deps).getTime() - olderThanMs);
+  return withTenant(deps.db, tenantId, async (tx) => {
+    const rows = await tx
+      .update(inboundMessages)
+      .set({ status: "received", error: null, updatedAt: nowOf(deps) })
+      .where(and(eq(inboundMessages.tenantId, tenantId), inArray(inboundMessages.status, ["received", "processing"]), lt(inboundMessages.updatedAt, cutoff)))
+      .returning({ id: inboundMessages.id });
+    for (const r of rows) await logEvent(tx, { tenantId, actor: SYSTEM, action: "requeued_stuck", entity: "message", entityId: r.id });
+    return rows.map((r) => r.id);
+  });
 }

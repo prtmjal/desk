@@ -1,6 +1,6 @@
 import "server-only";
 import { integrations, tenantRoutes, tenants, withTenant } from "@desk/db";
-import { confirmOrder, processMessage, runSync, sendWeeklyDigest, SYSTEM } from "@desk/service";
+import { confirmOrder, processMessage, requeueStuckMessages, runSync, sendWeeklyDigest, SYSTEM } from "@desk/service";
 import { eq } from "drizzle-orm";
 import { Inngest } from "inngest";
 import { getDeps } from "./deps";
@@ -80,4 +80,16 @@ const weeklyDigest = inngest.createFunction({ id: "weekly-digest", triggers: [{ 
   return { tenants: ids.length, sent };
 });
 
-export const functions = [processInbound, postOrder, scheduledSync, weeklyDigest];
+/** Every 10 minutes: pick up messages whose processing was interrupted. */
+const sweepStuck = inngest.createFunction({ id: "sweep-stuck-messages", triggers: [{ cron: "*/10 * * * *" }] }, async ({ step }) => {
+  const ids = await step.run("tenants", allTenantIds);
+  let requeued = 0;
+  for (const tenantId of ids) {
+    const stuck = await step.run(`sweep-${tenantId}`, async () => requeueStuckMessages(await getDeps(), tenantId));
+    if (stuck.length) await step.sendEvent(`dispatch-${tenantId}`, stuck.map((messageRowId) => ({ name: "desk/message.received", data: { tenantId, messageRowId } })));
+    requeued += stuck.length;
+  }
+  return { requeued };
+});
+
+export const functions = [processInbound, postOrder, scheduledSync, weeklyDigest, sweepStuck];

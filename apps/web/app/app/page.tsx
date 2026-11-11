@@ -1,4 +1,4 @@
-import { dashboardMetrics, getTenant, listMessages, listOrders, onboardingStatus } from "@desk/service";
+import { dashboardMetrics, getTenant, listMessages, listOrders, onboardingStatus, postingAllowance, requeueStuckMessages } from "@desk/service";
 import Link from "next/link";
 import { retryMessageAction } from "./actions";
 import { OrderTable } from "@/components/app/order-table";
@@ -6,16 +6,21 @@ import { PageHeader } from "@/components/app/page-header";
 import { ActionButton, AutoRefresh, CopyButton } from "@/components/app/ui";
 import { UploadForm } from "@/components/app/upload-form";
 import { ago, hours, pct } from "@/lib/format";
+import { isInngestConfigured } from "@/lib/env";
+import { dispatchProcess } from "@/lib/server/dispatch";
 import { requireSession } from "@/lib/server/session";
 
 export default async function InboxPage() {
   const s = await requireSession();
-  const [tenant, m, status, recent, messages] = await Promise.all([
+  // Without a job runner nothing else notices interrupted work, so the inbox does.
+  if (!isInngestConfigured()) for (const id of await requeueStuckMessages(s.deps, s.tenantId)) await dispatchProcess(s.tenantId, id);
+  const [tenant, m, status, recent, messages, allowance] = await Promise.all([
     getTenant(s.deps, s.tenantId),
     dashboardMetrics(s.deps, s.tenantId, 30),
     onboardingStatus(s.deps, s.tenantId),
     listOrders(s.deps, s.tenantId, { limit: 12 }),
     listMessages(s.deps, s.tenantId, { statuses: ["received", "processing", "failed", "ignored"], limit: 8 }),
+    postingAllowance(s.deps, s.tenantId),
   ]);
   const working = messages.some((x) => x.status === "received" || x.status === "processing");
   const shadow = tenant.settings.shadowMode;
@@ -44,6 +49,22 @@ export default async function InboxPage() {
           Shadow mode is on. Orders are read, matched and validated, and you can confirm them, but nothing is posted to your ERP.{" "}
           <Link href="/app/settings#rules" className="underline underline-offset-2">
             Change in Settings
+          </Link>
+        </p>
+      ) : null}
+
+      {!allowance.allowed ? (
+        <p role="alert" className="mt-4 rounded-md bg-danger-soft px-3 py-2 text-sm text-danger">
+          Posting is paused. {allowance.reason}{" "}
+          <Link href="/app/settings#billing" className="underline underline-offset-2">
+            Open billing
+          </Link>
+        </p>
+      ) : allowance.trialRemaining !== null && allowance.trialRemaining <= 10 && !shadow ? (
+        <p className="mt-4 rounded-md border border-border bg-bg-subtle px-3 py-2 text-sm">
+          {allowance.trialRemaining} posted order{allowance.trialRemaining === 1 ? "" : "s"} left in the trial.{" "}
+          <Link href="/app/settings#billing" className="underline underline-offset-2">
+            Choose a plan
           </Link>
         </p>
       ) : null}

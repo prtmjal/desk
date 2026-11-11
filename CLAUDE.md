@@ -17,7 +17,7 @@ The Phase 2 code is built; what is left needs real accounts and real customers. 
 - Units of measure are never guessed. An unknown unit is an error on the line, not a silent "each".
 
 ## Commands
-pnpm dev · pnpm demo · pnpm test · pnpm evals · pnpm db:migrate · pnpm lint · pnpm typecheck
+pnpm dev · pnpm demo · pnpm test · pnpm evals · pnpm db:migrate · pnpm lint · pnpm typecheck · pnpm preflight · pnpm stripe:setup
 
 `pnpm demo` runs the app with no accounts at all (sample tenant, in-process Postgres, offline parser).
 
@@ -31,6 +31,7 @@ Every integration is gated on its env var in apps/web/lib/env.ts; the app must b
 ## Where things are
 See docs/MASTER_PLAN.md §7.2, plus packages/service (application layer, added in Phase 2).
 Decisions: docs/DECISIONS.md. Eval results: docs/EVALS.md. Setup: docs/runbooks/SETUP.md. Status: docs/STATUS.md.
+Launch checklist: docs/runbooks/LAUNCH.md.
 
 ## Working style
 Plan first for any multi-file change; list files you will touch; write tests alongside; ask before adding dependencies.

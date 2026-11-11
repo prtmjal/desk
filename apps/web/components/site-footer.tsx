@@ -26,6 +26,12 @@ export function SiteFooter() {
           <Link href="/#audit" className="hover:text-fg">
             Free PO audit
           </Link>
+          <Link href="/terms" className="hover:text-fg">
+            Terms
+          </Link>
+          <Link href="/privacy" className="hover:text-fg">
+            Privacy
+          </Link>
           <Link href="/llms.txt" className="hover:text-fg">
             llms.txt
           </Link>

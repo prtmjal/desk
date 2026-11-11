@@ -80,3 +80,24 @@ exercises layer 4 deterministically instead of silently skipping it. `--live --r
 ## D-013 Relative imports without `.js`
 Workspace packages are consumed as TypeScript source by tsx, vitest and Next. Turbopack does not map
 `./x.js` to `./x.ts`, so relative imports carry no extension (`moduleResolution: Bundler`).
+
+## D-014 The paywall gates posting, nothing else
+A workspace without a live subscription may post `TRIAL_POSTED_ORDER_LIMIT` orders (default 25) to
+its ERP. After that, and whenever a subscription lapses (`past_due` is a grace period), confirmed
+orders are held as `confirmed` with a clear reason and post with one click once billing is fixed.
+Intake, reading, matching, review and shadow mode are never limited: a prospect sees the value
+before paying and a lapsed customer never loses an inbound order. Nothing is gated when Stripe is
+not configured. The plan (§8) does not define a trial; this is a default to tune, including the
+per-plan user limits on the price card, which are not enforced yet.
+
+## D-015 Error reporting without an SDK
+`apps/web/instrumentation.ts` logs one JSON line per failed request and, when `SENTRY_DSN` is set,
+posts the event to Sentry's envelope endpoint with fetch. No request bodies, headers or query
+strings are sent. Revisit when we want traces or client-side errors: then add the Sentry SDK.
+
+## D-016 Legal pages are drafts with company details from the environment
+`/terms` and `/privacy` describe what the product actually does (posting-only billing, no model
+training, encrypted ERP credentials, deletion within 30 days on request). Company name, address,
+contact, governing law and effective date come from `LEGAL_*` variables and render as visible
+placeholders until set; `pnpm preflight` fails without them. They need a lawyer's review.
+The 30-day deletion promise is carried out by hand today (docs/runbooks/LAUNCH.md).

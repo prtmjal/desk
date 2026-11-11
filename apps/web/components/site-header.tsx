@@ -31,13 +31,19 @@ export function SiteHeader() {
         </nav>
         <div className="flex items-center gap-2">
           {clerk ? (
-            <Link href="/sign-in" className="btn-secondary !py-1.5">
-              Sign in
+            <>
+              <Link href="/sign-in" className="btn-secondary !py-1.5">
+                Sign in
+              </Link>
+              <Link href="/sign-up" className="btn-primary !py-1.5">
+                Start free
+              </Link>
+            </>
+          ) : (
+            <Link href="/#audit" className="btn-primary !py-1.5">
+              {SITE.auditCta}
             </Link>
-          ) : null}
-          <Link href="/#audit" className="btn-primary !py-1.5">
-            {SITE.auditCta}
-          </Link>
+          )}
         </div>
       </div>
     </header>

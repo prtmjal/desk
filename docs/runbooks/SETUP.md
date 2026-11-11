@@ -60,17 +60,19 @@ Without them documents are written to local disk (`BLOB_DIR`), which does not su
    QuickBooks company, choose "Post as Sales Orders" and reconnect. Read docs/DECISIONS.md D-006 first.
 
 ## 9. Billing: Stripe
-1. Create three products (Starter, Growth, Scale), each with a monthly platform price and a metered
-   overage price backed by one Billing Meter whose event name is `desk_order_posted`.
-   Included orders per plan (150 / 600 / 2,500) are configured on the metered price as a free tier.
-2. Set `STRIPE_SECRET_KEY`, the six `STRIPE_PRICE_*` ids, and `STRIPE_METER_EVENT` if you used another name.
-3. Webhook to `https://<app>/api/webhooks/stripe` for `checkout.session.completed`,
+1. Set `STRIPE_SECRET_KEY` (test mode first) and run `pnpm stripe:setup`. It creates one billing
+   meter (`desk_order_posted`), three products and six prices (a flat platform fee and a metered
+   per-order price per plan, with the included orders as a free first tier), and prints the
+   `STRIPE_PRICE_*` lines to paste. Running it again changes nothing.
+2. Webhook to `https://<app>/api/webhooks/stripe` for `checkout.session.completed`,
    `customer.subscription.*`, `invoice.finalized`, `invoice.paid`, `invoice.payment_failed`; set `STRIPE_WEBHOOK_SECRET`.
+3. `TRIAL_POSTED_ORDER_LIMIT` (default 25) is how many orders a workspace may post before choosing a plan.
 
 ## 10. Deploy (Vercel)
 Root directory `apps/web`, install command `pnpm install` at the repo root, Node 22.
-Prompt files and migrations are traced into the build (apps/web/next.config.ts). Run migrations from
-CI or your machine, not from the app.
+Prompt files and migrations are traced into the build (apps/web/next.config.ts). Run migrations with
+the "Migrate database" GitHub workflow or from your machine, not from the app.
+Then run `pnpm preflight` and work through docs/runbooks/LAUNCH.md.
 
 ## First tenant checklist
 Sign up → create the organization → connect the ERP (or CSV export and import item/customer CSVs) →

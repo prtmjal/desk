@@ -1,4 +1,4 @@
-import { aliases, customers, events, orders, usageMeters, withTenant } from "@desk/db";
+import { aliases, customers, events, orders, subscriptions, usageMeters, withTenant } from "@desk/db";
 import { MockConnector } from "@desk/erp";
 import { FakeLlm, HeuristicLlm } from "@desk/extract";
 import { eq } from "drizzle-orm";
@@ -11,6 +11,7 @@ import {
   getTenant,
   ingest,
   listOrders,
+  postingAllowance,
   processMessage,
   receiveMessage,
   rejectOrder,
@@ -269,5 +270,29 @@ describe("review and posting", () => {
     expect(await listOrders(w.deps, other.tenantId)).toHaveLength(0);
     expect(await getOrder(w.deps, other.tenantId, o!.id)).toBeNull();
     await expect(confirmOrder(w.deps, other.tenantId, o!.id, USER)).rejects.toThrow(/not found/i);
+  });
+
+  it("holds posting when the trial allowance is used up, and resumes with a subscription", async () => {
+    w = await createWorld({ llm: new FakeLlm({ extraction: cleanOrder("PO-800") }) });
+    await live(w);
+    w.deps.billing = { enforce: true, trialPostedLimit: 1 };
+    await ingest(w.deps, w.tenantId, email());
+    const [a] = await listOrders(w.deps, w.tenantId);
+    expect((await confirmOrder(w.deps, w.tenantId, a!.id, USER)).status).toBe("posted");
+    expect(await postingAllowance(w.deps, w.tenantId)).toMatchObject({ allowed: false, trialRemaining: 0 });
+
+    w.setLlm(new FakeLlm({ extraction: cleanOrder("PO-801") }));
+    await ingest(w.deps, w.tenantId, email());
+    const [b] = await listOrders(w.deps, w.tenantId, { statuses: ["new", "needs_review"] });
+    const held = await confirmOrder(w.deps, w.tenantId, b!.id, USER);
+    expect(held).toMatchObject({ status: "confirmed", erpOrderId: null });
+    expect(held.error).toMatch(/Choose a plan/);
+    expect((await demoErp(w)).posted.size).toBe(1);
+
+    await withTenant(w.deps.db, w.tenantId, (tx) => tx.insert(subscriptions).values({ tenantId: w.tenantId, providerSubscriptionId: "sub_1", providerCustomerId: "cus_1", plan: "starter", status: "active" }));
+    expect((await confirmOrder(w.deps, w.tenantId, b!.id, USER)).status).toBe("posted");
+
+    await withTenant(w.deps.db, w.tenantId, (tx) => tx.update(subscriptions).set({ status: "canceled" }));
+    expect((await postingAllowance(w.deps, w.tenantId)).reason).toMatch(/subscription is canceled/);
   });
 });
